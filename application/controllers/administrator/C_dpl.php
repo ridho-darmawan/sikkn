@@ -77,8 +77,6 @@ class C_dpl extends CI_Controller
             'no_hp'  => $no_hp
         );
 
-       
-
         $this->M_dpl->insert_data($data, 'dpl');
         $insert_id = $this->db->insert_id(); 
         $dataLoginDpl = [
