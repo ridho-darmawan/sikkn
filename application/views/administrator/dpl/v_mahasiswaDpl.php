@@ -41,7 +41,9 @@
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
                     <P>KKN REGULER</P>
-                    <table class="table table-striped table-hover table-bordered">
+                    <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
                         <tr>
                             <th>NO</th>
                             <th>foto</th>
@@ -56,8 +58,10 @@
                             <th>agama</th>
                             <th>asal daerah</th>
                             <th>Laporan KKN</th>
-                            <th colspan='2'>AKSI</th>
+                            <th>AKSI</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         <?php
                         $no = 1;
                         foreach ($mhsBimbinganReguler as $value) : ?>
@@ -106,7 +110,9 @@
                             
                             </tr>
                         <?php endforeach; ?>
+                        </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -115,72 +121,80 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
             <div class="card-body">
                 <P>KKN MERDEKA</P>
-                <table class="table table-striped table-hover table-bordered">
-                    <tr>
-                        <th>NO</th>
-                        <th>foto</th>
-                        <th>NAMA MHS</th>
-                        <th>NIM</th>
-                        <th>TTL</th>
-                        <th>NO HP</th>
-                        <th>ALAMAT</th>
-                        <th>Jurusan</th>
-                        <th>semester</th>
-                        <th>email</th>
-                        <th>agama</th>
-                        <th>asal daerah</th>
-                        <th>Laporan KKN</th>
-                        <th colspan='2'>AKSI</th>
-                    </tr>
-                    <?php
-                    $no = 1;
-                    foreach ($mhsBimbinganMerdeka as $value) : ?>
-                    
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+
                         <tr>
-                            <td><?php echo $no++ ?> </td>
-                            <td><img src="<?= base_url('assets/uploads/'). $value->foto?>" alt="pas foto" width="100px"></td>
-                            <td><?php echo $value->nama_mhs ?></td>
-                            <td><?php echo $value->nim ?></td>
-                            <td><?php echo $value->tempat_lahir ?> , <?php echo $value->tanggal_lahir ?></td>
-                            <td><?php echo $value->no_hp ?></td>
-                            <td><?php echo $value->alamat ?></td>
-                            <td><?php echo $value->jurusan_id ?></td>
-                            <td><?php echo $value->semester ?></td>
-                            <td><?php echo $value->email ?></td>
-                            <td><?php echo $value->agama ?></td>
-                            <td><?php echo $value->asal_daerah?></td>
-                            <td>
-                                <?php if($value->laporan_kkn == null) : ?>
-                                    -
-                                <?php else:?>
-                                    <a href="<?php echo base_url('assets/uploads/laporan_kkn/'.$value->laporan_kkn); ?>" target="blank"><?= $value->laporan_kkn ?></a>
-                                <?php endif;?>
-                                
-                            </td>
-
-                            <td width="20px">
-                                <?php if($value->laporan_kkn == null) : ?>
-                                    -
-                                <?php elseif($value->disiplin_dpl == null) : ?>
-
-                                    <?php echo anchor('mahasiswa/C_kkn/inputNilai/'.$value->id_kkn, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Input Nilai</i></div>') ?>
-
-                                <?php elseif($value->disiplin_dpl != null) : ?>
-                                    
-
-                                    <?php echo anchor('mahasiswa/C_kkn/editNilai/'.$value->id_kkn, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Edit Nilai</i></div>') ?>
-
-                                <?php else:  ?>
-
-                                    <?php echo anchor('mahasiswa/C_kkn/inputNilai/'.$value->id_mhs, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Input Nilai</i></div>') ?>
-
-                                <?php endif;?>
-                                
-                            </td>
-                        
+                            <th>NO</th>
+                            <th>foto</th>
+                            <th>NAMA MHS</th>
+                            <th>NIM</th>
+                            <th>TTL</th>
+                            <th>NO HP</th>
+                            <th>ALAMAT</th>
+                            <th>Jurusan</th>
+                            <th>semester</th>
+                            <th>email</th>
+                            <th>agama</th>
+                            <th>asal daerah</th>
+                            <th>Laporan KKN</th>
+                            <th>AKSI</th>
                         </tr>
-                    <?php endforeach; ?>
-                </table>
+                        </thead>
+                        <tbody>
+
+                        <?php
+                        $no = 1;
+                        foreach ($mhsBimbinganMerdeka as $value) : ?>
+                        
+                            <tr>
+                                <td><?php echo $no++ ?> </td>
+                                <td><img src="<?= base_url('assets/uploads/'). $value->foto?>" alt="pas foto" width="100px"></td>
+                                <td><?php echo $value->nama_mhs ?></td>
+                                <td><?php echo $value->nim ?></td>
+                                <td><?php echo $value->tempat_lahir ?> , <?php echo $value->tanggal_lahir ?></td>
+                                <td><?php echo $value->no_hp ?></td>
+                                <td><?php echo $value->alamat ?></td>
+                                <td><?php echo $value->jurusan_id ?></td>
+                                <td><?php echo $value->semester ?></td>
+                                <td><?php echo $value->email ?></td>
+                                <td><?php echo $value->agama ?></td>
+                                <td><?php echo $value->asal_daerah?></td>
+                                <td>
+                                    <?php if($value->laporan_kkn == null) : ?>
+                                        -
+                                    <?php else:?>
+                                        <a href="<?php echo base_url('assets/uploads/laporan_kkn/'.$value->laporan_kkn); ?>" target="blank"><?= $value->laporan_kkn ?></a>
+                                    <?php endif;?>
+                                    
+                                </td>
+
+                                <td width="20px">
+                                    <?php if($value->laporan_kkn == null) : ?>
+                                        -
+                                    <?php elseif($value->disiplin_dpl == null) : ?>
+
+                                        <?php echo anchor('mahasiswa/C_kkn/inputNilai/'.$value->id_kkn, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Input Nilai</i></div>') ?>
+
+                                    <?php elseif($value->disiplin_dpl != null) : ?>
+                                        
+
+                                        <?php echo anchor('mahasiswa/C_kkn/editNilai/'.$value->id_kkn, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Edit Nilai</i></div>') ?>
+
+                                    <?php else:  ?>
+
+                                        <?php echo anchor('mahasiswa/C_kkn/inputNilai/'.$value->id_mhs, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Input Nilai</i></div>') ?>
+
+                                    <?php endif;?>
+                                    
+                                </td>
+                            
+                            </tr>
+                        <?php endforeach; ?>
+                        <tbody>
+                    </table>
+                </div>
             </div>
         </div>
         </div>

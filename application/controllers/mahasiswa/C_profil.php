@@ -28,7 +28,6 @@ class C_profil extends CI_Controller
     }
 
  
-
     function get_jurusan()
     {
         $fakultas_id = $this->input->post('id',TRUE);
@@ -113,7 +112,7 @@ class C_profil extends CI_Controller
 
         $this->M_profil->updateData($id, $data, 'mahasiswa');
         $this->session->set_flashdata('mhs_profil', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-        Data berhasil ditambahkan!
+        Data berhasil diubah!
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times; </span>
         </button>
@@ -129,7 +128,7 @@ class C_profil extends CI_Controller
             'nama' => $data->username,
             'level' => $data->level,
             'title' => $data->level,
-            'mahasiswa' => $this->M_profil->getData('login_user', $data->id)->row() 
+            'mahasiswa' => $this->M_profil->getDataUser('login_user', $data->id)->row() 
         );
         
         $this->load->view('templates_administrator/header', $data);

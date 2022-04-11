@@ -34,9 +34,15 @@ class M_profil extends CI_Model
 
     public function getData($table,$id)
     {
+        $this->db->where('id_mhs', $id);
+        return $this->db->get($table);
+    }  
+    
+    public function getDataUser($table,$id)
+    {
         $this->db->where('id', $id);
         return $this->db->get($table);
-    }   
+    }  
 
     public function updateData($id, $data, $table)
     {

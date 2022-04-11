@@ -13,22 +13,11 @@ class C_laporan extends CI_Controller
             'cekJadwalKkn' => $this->M_kkn->jadwalKkn('setting_kkn')->row(),
         );
 
-        // var_dump(strtotime(date('d-m-y')));
-        // var_dump(strtotime($data['cekJadwalKkn']->tgl_mulai_kkn));
-        
-        // die;
-
-    //     $a = new datetime($data['cekJadwalKkn']->tgl_mulai_kkn);
-    //     $b = new datetime($data['cekJadwalKkn']->tgl_akhir_kkn);
-    //     $c = $b->diff($a);
-    //     $nextN = mktime(0, 0, 0, date("m"), date("d") + $n, date("Y"));
-
-    // var_dump($c->d );die;
-
-    //     var_dump(date_diff('day',$data['cekJadwalKkn']->tgl_mulai_kkn, $data['cekJadwalKkn']->tgl_akhir_kkn));die;
         $data['title'] = "Laporan KKN ";
         $data['dataKkn'] = $this->M_kkn->getData($this->session->userdata['username'],'mahasiswa')->row();
         $data['kkn'] = $this->M_kkn->getDataKkn( $data['dataKkn']->id_mhs,'kkn')->row();
+
+        // var_dump($data['kkn']);die;
       
       
         $this->load->view('templates_administrator/header', $data);
@@ -46,8 +35,11 @@ class C_laporan extends CI_Controller
 
 
         if ($laporan) {
+            $randomString = random_string('numeric', 3);
             $config['upload_path'] = 'assets/uploads/laporan_kkn';
             $config['allowed_types'] = 'pdf|docx|doc|xls';
+            $config['file_name'] = "Laporan-". $randomString;
+                   
 
             $this->load->library('upload');
             $this->upload->initialize($config);
@@ -67,8 +59,15 @@ class C_laporan extends CI_Controller
         );
 
         $this->M_kkn->updateData($id_kkn, $data, 'kkn');
+        // $id_kkn = $this->db->insert_id(); 
+
+        $dataNilai = [
+            'id_kkn_mhs' => $id_kkn
+        ];
+        $this->M_kkn->insertNilai($dataNilai,'nilai_kkn');
+
         $this->session->set_flashdata('laporan_kkn', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                Data Laporan akhir berhasil diupdate!
+                Data Laporan akhir berhasil Ditambah!
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times; </span>
             </button>
