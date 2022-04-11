@@ -60,29 +60,41 @@
             
     <?php elseif(  strtotime(date('Y-m-d')) >= strtotime($cekJadwalKkn->tgl_mulai_laporan) && strtotime(date('Y-m-d')) >= strtotime($cekJadwalKkn->tgl_akhir_laporan) && $kkn->laporan_kkn != null):?>
         <table class="table table-striped table-hover table-bordered mt-4">
-                    <tr>
-                        <th>File</th>
-                        <th>Lihat</th>
-                        <th>Download</th>
-                        <!-- <th>Edit</th> -->
-                    </tr>
-                
-                
-                    <tr>
-                        <td>Laporan KKN</td>
-                        <td><a href="<?php echo base_url('assets/uploads/laporan_kkn/'.$kkn->laporan_kkn); ?>" target="blank"><?= $kkn->laporan_kkn ?></a> </td>
+            <tr>
+                <th>File</th>
+                <th>Lihat</th>
+                <th>Download</th>
+                <!-- <th>Edit</th> -->
+            </tr>
+            <tr>
+                <td>Laporan KKN</td>
+                <td><a href="<?php echo base_url('assets/uploads/laporan_kkn/'.$kkn->laporan_kkn); ?>" target="blank"><?= $kkn->laporan_kkn ?></a> </td>
 
-                        <td>
-                            <?php echo anchor('mahasiswa/C_laporan/downloadLaporan/' . $kkn->id_kkn, '<div class="btn btn-sm btn-info">
-                            <i class="fa fa-download"></i></div>') ?>
-                        </td>
+                <td>
+                    <?php echo anchor('mahasiswa/C_laporan/downloadLaporan/' . $kkn->id_kkn, '<div class="btn btn-sm btn-info">
+                    <i class="fa fa-download"></i></div>') ?>
+                </td>
 
-                        <!-- <td>
-                            <?php echo anchor('mahasiswa/C_laporan/edit/' . $kkn->id_kkn, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?>
-                        </td> -->
-                    </tr>
-                
-                </table>
+                <!-- <td>
+                    <?php echo anchor('mahasiswa/C_laporan/edit/' . $kkn->id_kkn, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?>
+                </td> -->
+            </tr>
+        </table>
+        <br>
+        <div class="alert alert-success" role="alert">
+            <i class="fas fa-tachometer-alt"></i>
+            Sertifikat KKN
+        </div>
+        <?php  if($kkn->sertifikat == null) :?>
+            <p style="color:red">Sertifikat Belum Terbit</p>
+        <?php else: ?>
+            <?php echo form_open_multipart('administrator/C_mahasiswa/sertifikat');?>
+                <input type="hidden" name="id_mhs" value="<?= $kkn->id_mhs_kkn ?>">
+                <input type="hidden" name="id_kkn" value="<?= $kkn->id_kkn ?>" >
+                <button type="submit" class="btn btn-sm btn-success">Cetak Sertifikat</button>
+            <?php echo form_close() ?>
+        <?php  endif; ?>
+
         <?php else:?>
             <h4 style="color:red;" class="p-4 mt-4 text-center"><strong>  Input Laporan Dibuka Pada tanggal <?= $cekJadwalKkn->tgl_mulai_laporan ?> sampai <?= $cekJadwalKkn->tgl_akhir_laporan ?></strong></h4> 
         <?php endif;?>

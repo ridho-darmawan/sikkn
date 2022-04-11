@@ -156,7 +156,7 @@ class M_kkn extends CI_Model
         $this->db->where_in('lokasi_kkn', $data);
         $this->db->Where('jenis_kkn', 'kkn_reguler');
         $this->db->join('mahasiswa','mahasiswa.id_mhs = kkn.id_mhs_kkn','left');
-        // $this->db->join('nilai_kkn','nilai_kkn.id_nilai = kkn.id_kkn','left');
+        $this->db->join('nilai_kkn','nilai_kkn.id_kkn_mhs = kkn.id_kkn','left');
         return $this->db->get('kkn');
     }
 
@@ -166,7 +166,7 @@ class M_kkn extends CI_Model
         $this->db->where_in('lokasi_kkn', $data);
         $this->db->Where('jenis_kkn', 'kkn_merdeka');
         $this->db->join('mahasiswa','mahasiswa.id_mhs = kkn.id_mhs_kkn','left');
-        // $this->db->join('nilai_kkn','nilai_kkn.id_kkn_mhs = kkn.id_kkn','left');
+        $this->db->join('nilai_kkn','nilai_kkn.id_kkn_mhs = kkn.id_kkn','left');
         return $this->db->get('kkn');
     }
 

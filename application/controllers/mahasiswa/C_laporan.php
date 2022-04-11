@@ -28,11 +28,9 @@ class C_laporan extends CI_Controller
 
     public function store()
     {
-        // $getNamaBerkas = $this->input->post('upload_laporan_old');
+
         $id_kkn     = $this->input->post('id');
         $laporan    = $_FILES['upload_laporan']['name'];
-
-
 
         if ($laporan) {
             $randomString = random_string('numeric', 3);
@@ -53,10 +51,7 @@ class C_laporan extends CI_Controller
             }
         }
 
-        $data = array(
-            
-
-        );
+        $data = [];
 
         $this->M_kkn->updateData($id_kkn, $data, 'kkn');
         // $id_kkn = $this->db->insert_id(); 

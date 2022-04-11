@@ -93,16 +93,16 @@
                                         -
                                     <?php elseif($value->disiplin_dpl == null) : ?>
 
-                                        <?php echo anchor('mahasiswa/C_kkn/inputNilai/'.$value->id_kkn, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Input Nilai</i></div>') ?>
+                                        <?php echo anchor('mahasiswa/C_kkn/inputNilai/'.$value->id_nilai, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Input Nilai</i></div>') ?>
 
                                     <?php elseif($value->disiplin_dpl != null) : ?>
                                         
 
-                                        <?php echo anchor('mahasiswa/C_kkn/editNilai/'.$value->id_kkn, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Edit Nilai</i></div>') ?>
+                                        <?php echo anchor('mahasiswa/C_kkn/editNilai/'.$value->id_nilai, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Edit Nilai</i></div>') ?>
 
                                     <?php else:  ?>
 
-                                        <?php echo anchor('mahasiswa/C_kkn/inputNilai/'.$value->id_mhs, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Input Nilai</i></div>') ?>
+                                        <?php echo anchor('mahasiswa/C_kkn/inputNilai/'.$value->id_nilai, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Input Nilai</i></div>') ?>
 
                                     <?php endif;?>
                                     
@@ -175,16 +175,16 @@
                                         -
                                     <?php elseif($value->disiplin_dpl == null) : ?>
 
-                                        <?php echo anchor('mahasiswa/C_kkn/inputNilai/'.$value->id_kkn, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Input Nilai</i></div>') ?>
+                                        <?php echo anchor('mahasiswa/C_kkn/inputNilai/'.$value->id_nilai, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Input Nilai</i></div>') ?>
 
                                     <?php elseif($value->disiplin_dpl != null) : ?>
                                         
 
-                                        <?php echo anchor('mahasiswa/C_kkn/editNilai/'.$value->id_kkn, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Edit Nilai</i></div>') ?>
+                                        <?php echo anchor('mahasiswa/C_kkn/editNilai/'.$value->id_nilai, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Edit Nilai</i></div>') ?>
 
                                     <?php else:  ?>
 
-                                        <?php echo anchor('mahasiswa/C_kkn/inputNilai/'.$value->id_mhs, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Input Nilai</i></div>') ?>
+                                        <?php echo anchor('mahasiswa/C_kkn/inputNilai/'.$value->id_nilai, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit">Input Nilai</i></div>') ?>
 
                                     <?php endif;?>
                                     

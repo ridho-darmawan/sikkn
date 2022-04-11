@@ -6,6 +6,13 @@
                 <i class="fas fa-university"></i> Form Input Nilai Mahasiswa KKN
             </div>
 
+            <button class="btn btn-sm btn-warning mb-4" onclick="goBack()">Kembali</button>
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script>
+
             <?php echo form_open_multipart('mahasiswa/C_kkn/storeNilaiKknDesa');?>
             <input type="hidden" value="<?= $id_nilai ?>" name="id_nilai">
             <div class="form-group">

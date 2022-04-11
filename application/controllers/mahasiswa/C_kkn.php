@@ -639,7 +639,7 @@ class C_kkn extends CI_Controller
             $data['mhsBimbinganReguler'] = $this->M_kkn->getMahasiswaBimbinganReguler($data['lokasiBimbingan'])->result();
             $data['mhsBimbinganMerdeka'] = $this->M_kkn->getMahasiswaBimbinganMerdeka($data['lokasiBimbingan'])->result();
 
-            // var_dump($data['mhsBimbingan']);die;
+            // var_dump($data['mhsBimbinganReguler']);die;
             $data['title'] = "Data Mahasiswa ";
         
             $this->load->view('templates_administrator/header', $data);
@@ -648,7 +648,7 @@ class C_kkn extends CI_Controller
             $this->load->view('templates_administrator/footer',$data);
         }
 
-        public function inputNilai($id_mhs)
+        public function inputNilai($id_nilai)
         {
             // $dataMhs = $this->M_kkn->getMahasiswa($id_mhs)->row();
             $data = $this->User_model->ambil_data($this->session->userdata['username']);
@@ -657,7 +657,7 @@ class C_kkn extends CI_Controller
                 'nama' => $data->username,
                 'level' => $data->level,
                 'title' => $data->level,
-                'id_mhs' =>$id_mhs
+                'id_nilai' =>$id_nilai
                 
             );
             $data['title'] = "Input Nilai KKN";
@@ -671,26 +671,22 @@ class C_kkn extends CI_Controller
         public function storeNilaiKkn()
         {
             
-            $id_kkn_mhs = $this->input->post('id_mhs');
+            $id_nilai = $this->input->post('id_nilai');
             $disiplin = $this->input->post('disiplin');
             $kreatifitas = $this->input->post('kreatifitas');
             $kerjasama = $this->input->post('kerjasama');
             $komunikasi = $this->input->post('komunikasi');
             $kesesuaian = $this->input->post('kesesuaian');
 
-            $cekId = $this->M_kkn->cekIdMhs($id_mhs)->row();
+            $data = [
+                'disiplin_dpl' => $disiplin,
+                'kreatifitas_dpl' => $kreatifitas,
+                'kerjasama_dpl' =>$kerjasama,
+                'komunikasi_dpl' =>$komunikasi,
+                'kesesuaianhasil_dpl' =>$kesesuaian,
+            ];
 
-            if ($cekId == null) {
-                $data = [
-                    'id_kkn_mhs'    => $id_kkn_mhs,
-                    'disiplin_dpl' => $disiplin,
-                    'kreatifitas_dpl' => $kreatifitas,
-                    'kerjasama_dpl' =>$kerjasama,
-                    'komunikasi_dpl' =>$komunikasi,
-                    'kesesuaianhasil_dpl' =>$kesesuaian,
-                ];
-
-                $this->M_kkn->insertNilai($data,'nilai_kkn');
+                $this->M_kkn->updateNilai($id_nilai,$data,'nilai_kkn');
                 $this->session->set_flashdata('mhskkn', '<div class="alert alert-success alert-dismissible fade show" role="alert">
                 Data berhasil ditambahkan!
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -698,34 +694,10 @@ class C_kkn extends CI_Controller
                 </button>
                 </div>');
                 redirect('mahasiswa/C_kkn/mahasiswaDpl');
-
-
-            }else{
-                $data = [
-                    'disiplin_dpl' => $disiplin,
-                    'kreatifitas_dpl' => $kreatifitas,
-                    'kerjasama_dpl' =>$kerjasama,
-                    'komunikasi_dpl' =>$komunikasi,
-                    'kesesuaianhasil_dpl' =>$kesesuaian,
-                ];
-
-                $this->M_kkn->updateNilai($id_mhs,$data,'nilai_kkn');
-                $this->session->set_flashdata('mhskkn', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                Data berhasil ditambahkan!
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times; </span>
-                </button>
-                </div>');
-                redirect('mahasiswa/C_kkn/mahasiswaDpl');
-            }
-
             
-
-
-
         }
 
-        public function editNilai($id_kkn)
+        public function editNilai($id_nilai)
         {
             // $dataMhs = $this->M_kkn->getMahasiswa($id_mhs)->row();
             $data = $this->User_model->ambil_data($this->session->userdata['username']);
@@ -733,9 +705,8 @@ class C_kkn extends CI_Controller
             $data = array(
                 'nama' => $data->username,
                 'level' => $data->level,
-                'title' => $data->level,
-                'nilai' => $this->M_kkn->cekIdMhs($id_kkn)->row(),
-                'id_kkn' => $id_kkn
+                'title' => $data->level,                
+                'nilai' => $this->M_kkn->cekNilai($id_nilai)->row(),
             );
 
 
@@ -747,63 +718,7 @@ class C_kkn extends CI_Controller
 
         }
 
-        public function updateNilaiKkn()
-        {
-            
-            $id_kkn_mhs = $this->input->post('id_kkn');
-            $disiplin = $this->input->post('disiplin');
-            $kreatifitas = $this->input->post('kreatifitas');
-            $kerjasama = $this->input->post('kerjasama');
-            $komunikasi = $this->input->post('komunikasi');
-            $kesesuaian = $this->input->post('kesesuaian');
-
-            $cekId = $this->M_kkn->cekIdMhs($id_kkn_mhs)->row();
-
-            // var_dump($cekId->id_nilai);die;
-
-            if ($cekId == null) {
-                $data = [
-                    'disiplin_dpl' => $disiplin,
-                    'kreatifitas_dpl' => $kreatifitas,
-                    'kerjasama_dpl' =>$kerjasama,
-                    'komunikasi_dpl' =>$komunikasi,
-                    'kesesuaianhasil_dpl' =>$kesesuaian,
-                ];
-
-                $this->M_kkn->updateNilai($cekId->id_nilai,$data,'nilai_kkn');
-                $this->session->set_flashdata('mhskkn', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                Nilai berhasil diubah!
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times; </span>
-                </button>
-                </div>');
-                redirect('mahasiswa/C_kkn/mahasiswaDpl');
-
-
-            }else{
-                $data = [
-                    'disiplin_dpl' => $disiplin,
-                    'kreatifitas_dpl' => $kreatifitas,
-                    'kerjasama_dpl' =>$kerjasama,
-                    'komunikasi_dpl' =>$komunikasi,
-                    'kesesuaianhasil_dpl' =>$kesesuaian,
-                ];
-
-                $this->M_kkn->updateNilai($cekId->id_nilai,$data,'nilai_kkn');
-                $this->session->set_flashdata('mhskkn', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                Nilai berhasil diubah!
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times; </span>
-                </button>
-                </div>');
-                redirect('mahasiswa/C_kkn/mahasiswaDpl');
-            }
-
-            
-
-
-
-        }
+      
 
         public function mahasiswaDesa()
         {
@@ -841,6 +756,27 @@ class C_kkn extends CI_Controller
             $this->load->view('templates_administrator/footer',$data);
         }
 
+        public function editNilaiDesa($id_nilai)
+        {
+            // $dataMhs = $this->M_kkn->getMahasiswa($id_mhs)->row();
+            $data = $this->User_model->ambil_data($this->session->userdata['username']);
+
+            $data = array(
+                'nama' => $data->username,
+                'level' => $data->level,
+                'title' => $data->level,
+                'nilai' => $this->M_kkn->cekNilai($id_nilai)->row(),
+            );
+
+
+            $data['title'] = "Edit Nilai KKN";
+            $this->load->view('templates_administrator/header', $data);
+            $this->load->view('templates_administrator/sidebar', $data);
+            $this->load->view('desa/v_editNilaiDesa', $data);
+            $this->load->view('templates_administrator/footer',$data);
+
+        }
+
         public function inputNilaiDesa($id_nilai)
         {
             // $dataMhs = $this->M_kkn->getMahasiswa($id_mhs)->row();
@@ -870,12 +806,8 @@ class C_kkn extends CI_Controller
             $kerjasama = $this->input->post('kerjasama');
             $komunikasi = $this->input->post('komunikasi');
             $kesesuaian = $this->input->post('kesesuaian');
-
-            $cekId = $this->M_kkn->cekNilai($id_nilai)->row();
-
-            if ($cekId == null) {
-                $data = [
-                    'id_mhs'    => $id_mhs,
+        
+            $data = [
                     'disiplin_desa' => $disiplin,
                     'kreatifitas_desa' => $kreatifitas,
                     'kerjasama_desa' =>$kerjasama,
@@ -883,7 +815,7 @@ class C_kkn extends CI_Controller
                     'kesesuaianhasil_desa' =>$kesesuaian,
                 ];
 
-                $this->M_kkn->insertNilai($data,'nilai_kkn');
+                $this->M_kkn->updateNilai($id_nilai,$data,'nilai_kkn');
                 $this->session->set_flashdata('desakkn', '<div class="alert alert-success alert-dismissible fade show" role="alert">
                 Data berhasil ditambahkan!
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -891,29 +823,6 @@ class C_kkn extends CI_Controller
                 </button>
                 </div>');
                 redirect('mahasiswa/C_kkn/mahasiswaDesa');
-
-
-            }else{
-                $data = [
-                    'disiplin_desa' => $disiplin,
-                    'kreatifitas_desa' => $kreatifitas,
-                    'kerjasama_desa' =>$kerjasama,
-                    'komunikasi_desa' =>$komunikasi,
-                    'kesesuaianhasil_desa' =>$kesesuaian,
-                ];
-
-                $this->M_kkn->updateNilai($id_mhs,$data,'nilai_kkn');
-                $this->session->set_flashdata('desakkn', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                Data berhasil ditambahkan!
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times; </span>
-                </button>
-                </div>');
-                redirect('mahasiswa/C_kkn/mahasiswaDesa');
-            }
-
-            
-
 
 
         }

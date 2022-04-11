@@ -9,9 +9,6 @@
             <?php echo $this->session->unset_userdata('desakkn'); ?>
     <?php endif; ?>
 
-    <!-- <?php echo anchor('administrator/C_fakultas/create', '<button class="btn btn-sm btn-primary mb-3 mr-3"><i class="fas fa-download fa-sm">
-        </i> Download Data Mahasiswa</button>'); ?> -->
-
 
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
