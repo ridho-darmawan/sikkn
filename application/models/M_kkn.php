@@ -69,6 +69,14 @@ class M_kkn extends CI_Model
         return $this->db->get();
     }
 
+    public function getPembimbing($id)
+    {
+        $this->db->where('desa_id', $id);
+        $this->db->from('lokasi_kkn');
+        $this->db->join('dpl','dpl.id_dpl = lokasi_kkn.id_dpl'); 
+        return $this->db->get();
+    }
+
     public function hapusData($where, $table)
     {
         $this->db->where($where);

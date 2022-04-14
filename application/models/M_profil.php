@@ -10,6 +10,7 @@ class M_profil extends CI_Model
         $this->db->select('*');
         $this->db->from('mahasiswa a'); 
         $this->db->where('id_mhs', $id_mhs); 
+        $this->db->or_where('nim', $id_mhs); 
         $this->db->join('fakultas b', 'b.id=a.fakultas_id', 'left');
         $this->db->join('jurusan c', 'c.id_jurusan=a.jurusan_id', 'left');  
         return $this->db->get(); 

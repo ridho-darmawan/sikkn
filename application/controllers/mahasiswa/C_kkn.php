@@ -17,6 +17,9 @@ class C_kkn extends CI_Controller
         $data['title'] = "Data KKN ";
         $data['kkn'] = $this->M_kkn->getData($this->session->userdata['username'],'mahasiswa')->row();
         $data['dataKkn'] = $this->M_kkn->getDataKkn($data['kkn']->id_mhs,'kkn')->row();
+        $data['lokasiKkn'] = $this->M_kkn->getLokasiKknMahasiswa($data['dataKkn']->id_kkn,'kkn')->row();
+        $data['pembimbing'] = $this->M_kkn->getPembimbing($data['lokasiKkn']->lokasi_kkn)->row();
+        // var_dump($data['dataKkn']);die;
         $data['getProvinsi'] = $this->M_kkn->getProvinsi()->result();
       
         $this->load->view('templates_administrator/header', $data);

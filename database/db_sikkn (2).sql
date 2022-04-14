@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2022 at 03:34 AM
+-- Generation Time: Apr 12, 2022 at 04:37 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -7280,8 +7280,7 @@ CREATE TABLE `dpl` (
 --
 
 INSERT INTO `dpl` (`id_dpl`, `nama_dpl`, `tempat_lahir`, `tanggal_lahir`, `nip`, `no_hp`, `alamat`, `sk`) VALUES
-(1, 'ridho darmawan, S.T., M.Kom', 'Tembilahan', '1996-10-21', '199610212022031001', 2147483647, 'riau', 'sk-034.pdf'),
-(13, 'fajri, S.T', 'asd', '2022-03-10', '999999999', 909099090, 'riau', NULL);
+(14, 'M. Fikry, ST. M.Sc', 'tembilahan kota', '1996-10-21', '1', 2147483647, 'tg harapan', 'sk-510.pdf');
 
 -- --------------------------------------------------------
 
@@ -7301,9 +7300,7 @@ CREATE TABLE `fakultas` (
 INSERT INTO `fakultas` (`id`, `nama`) VALUES
 (1, 'teknik'),
 (2, 'syariah'),
-(3, 'hukum'),
-(4, 'kedokteran'),
-(5, 'ilmu komunikasi');
+(3, 'hukum');
 
 -- --------------------------------------------------------
 
@@ -7354,8 +7351,7 @@ CREATE TABLE `kkn` (
 --
 
 INSERT INTO `kkn` (`id_kkn`, `id_mhs_kkn`, `semester`, `rekom_kkn`, `krs`, `slip`, `sk_bm`, `sk_sehat`, `foto`, `jenis_kkn`, `rekom_jurusanprodi`, `laporan_kkn`, `lokasi_kkn`, `sertifikat`) VALUES
-(8, 21, 7, 'rekom_kkn-111111-584.pdf', 'krs-111111-614.pdf', 'slip-111111-751.pdf', 'sk_bm-111111-382.pdf', 'sk_sehat-111111-364.pdf', 'foto_almamater-111111-432.jpeg', 'kkn_merdeka', 'rekom-jurusan-prodi-111111-192.pdf', '37_EMRY_SAPUTRA_(PA__TBH).pdf', '1403090002', 'sertifikat_indra kenz_111111'),
-(16, 21, 7, 'rekom_kkn-111111-584.pdf', 'krs-111111-614.pdf', 'slip-111111-751.pdf', 'sk_bm-111111-382.pdf', 'sk_sehat-111111-364.pdf', 'foto_almamater-111111-432.jpeg', 'kkn_reguler', 'rekom-jurusan-prodi-111111-192.pdf', '38_EMRY_SAPUTRA_(PA__TBH).pdf', '1403090002', 'sertifikat_indra kenz_111111');
+(19, 26, 6, '', 'krs-111-529.pdf', 'slip-111-680.pdf', '', 'sk_sehat-111-452.pdf', 'foto_almamater--027.jpg', 'kkn_merdeka', 'rekom-jurusan-prodi-111-213.pdf', 'Laporan-109.pdf', '1403011006', 'sertifikat_ridho darmawan, S.T, M.Kom, Phd_111');
 
 -- --------------------------------------------------------
 
@@ -7378,9 +7374,10 @@ CREATE TABLE `login_user` (
 
 INSERT INTO `login_user` (`id`, `id_user`, `username`, `password`, `level`, `status`) VALUES
 (12, 0, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'lppm', 'Y'),
-(22, 21, '111111', '96e79218965eb72c92a549dd5a330112', 'mahasiswa', 'Y'),
-(26, 13, '999999999', 'c8c605999f3d8352d7bb792cf3fdb25b', 'dpl', 'Y'),
-(27, 6, 'renah alai', '5c81fe1d6f38f1cadc71b0801b38875c', 'desa', 'Y');
+(28, 14, '1', 'c4ca4238a0b923820dcc509a6f75849b', 'dpl', 'Y'),
+(29, 7, 'kemuning muda', '5f4dcc3b5aa765d61d8327deb882cf99', 'desa', 'Y'),
+(30, 26, '111', '698d51a19d8a121ce581499d7b701668', 'mahasiswa', 'Y'),
+(31, 8, 'muara parlampungan', '375a6cd943f5494becf77e8be6713feb', 'desa', 'Y');
 
 -- --------------------------------------------------------
 
@@ -7404,7 +7401,9 @@ CREATE TABLE `lokasi_kkn` (
 --
 
 INSERT INTO `lokasi_kkn` (`id_lokasi`, `provinsi_id`, `kabupaten_id`, `kecamatan_id`, `desa_id`, `kuota_kkn`, `sisa_kuota`, `id_dpl`) VALUES
-(1, '14', '1403', '1403090', '1403090002', 20, 0, 13);
+(1, '14', '1403', '1403090', '1403090002', 20, 0, 14),
+(7, '14', '1403', '1403011', '1403011006', 2, 0, 14),
+(8, '12', '1202', '1202020', '1202020028', 12, 0, 14);
 
 -- --------------------------------------------------------
 
@@ -7444,12 +7443,12 @@ CREATE TABLE `mahasiswa` (
   `nim` varchar(50) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
   `tempat_lahir` varchar(100) DEFAULT NULL,
-  `tanggal_lahir` date DEFAULT NULL,
+  `tanggal_lahir` varchar(255) DEFAULT NULL,
   `alamat` varchar(255) DEFAULT NULL,
   `fakultas_id` int(11) DEFAULT NULL,
   `jurusan_id` int(11) DEFAULT NULL,
   `foto_profil` varchar(255) DEFAULT NULL,
-  `no_hp` int(11) DEFAULT NULL,
+  `no_hp` varchar(20) DEFAULT NULL,
   `asal_daerah` varchar(255) DEFAULT NULL,
   `agama` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -7459,9 +7458,7 @@ CREATE TABLE `mahasiswa` (
 --
 
 INSERT INTO `mahasiswa` (`id_mhs`, `nama_mhs`, `nim`, `email`, `tempat_lahir`, `tanggal_lahir`, `alamat`, `fakultas_id`, `jurusan_id`, `foto_profil`, `no_hp`, `asal_daerah`, `agama`) VALUES
-(7, 'ridho darmawan', '18928192', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'islam'),
-(21, 'indra kenz', '111111', 'ridho.rd849@gmail.com', 'tembilahan', '2022-03-10', 'tg harapan', 1, 5, 'ttd-302.png', 452, 'riau', 'islam'),
-(22, 'indra as', '111111', 'ridho.rd849@gmail.com', 'asd', '2022-03-10', 'tg harapan', 1, 5, NULL, 452, 'riau', 'islam');
+(26, 'ridho darmawan, S.T, M.Kom, Phd', '111', 'ridho.rd849@gmail.com', 'tembilahan kota', '1996-10-21', 'Tembilahan Hilir', 1, 5, NULL, '085364623827', 'tembilahan', 'islam');
 
 -- --------------------------------------------------------
 
@@ -7489,8 +7486,7 @@ CREATE TABLE `nilai_kkn` (
 --
 
 INSERT INTO `nilai_kkn` (`id_nilai`, `id_kkn_mhs`, `disiplin_dpl`, `kreatifitas_dpl`, `kerjasama_dpl`, `komunikasi_dpl`, `kesesuaianhasil_dpl`, `kreatifitas_desa`, `kerjasama_desa`, `komunikasi_desa`, `kesesuaianhasil_desa`, `disiplin_desa`) VALUES
-(2, 8, 'A-', 'A-', 'B+', 'A-', 'A', 'A-', 'B+', 'B+', 'A-', 'A'),
-(4, 16, 'B+', 'A', 'B+', 'A-', 'C+', 'B', 'B+', 'B', 'A-', 'A');
+(7, 19, 'B', 'A', 'A', 'A', 'B+', 'B+', 'A-', 'B-', 'A-', 'A-');
 
 -- --------------------------------------------------------
 
@@ -8102,7 +8098,7 @@ CREATE TABLE `setting_kkn` (
 --
 
 INSERT INTO `setting_kkn` (`id_set`, `tgl_mulai_kkn`, `tgl_akhir_kkn`, `tgl_mulai_laporan`, `tgl_akhir_laporan`, `ketua`, `nip_ketua`, `gelombang`, `tahun`, `ttd_ketua`, `koordinator_kkn`, `nip_koordinator`, `ttd_koordinator`) VALUES
-(1, '2022-03-30', '2022-04-08', '2022-03-31', '2022-04-12', 'ridho darmawan, ST', '1996070820081001', '1', '2022', 'ttd-463.png', 'Rahmad sahroni. S.Kom', '1998090920091001', 'ttd-302.png');
+(1, '2022-03-30', '2022-04-11', '2022-03-31', '2022-04-11', 'ridho darmawan, ST', '1996070820081001', '1', '2022', 'ttd-463.png', 'Rahmad sahroni. S.Kom', '1998090920091001', 'ttd-302.png');
 
 -- --------------------------------------------------------
 
@@ -83279,13 +83275,13 @@ ALTER TABLE `villages`
 -- AUTO_INCREMENT for table `dpl`
 --
 ALTER TABLE `dpl`
-  MODIFY `id_dpl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_dpl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `fakultas`
 --
 ALTER TABLE `fakultas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `jurusan`
@@ -83297,19 +83293,19 @@ ALTER TABLE `jurusan`
 -- AUTO_INCREMENT for table `kkn`
 --
 ALTER TABLE `kkn`
-  MODIFY `id_kkn` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_kkn` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `login_user`
 --
 ALTER TABLE `login_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `lokasi_kkn`
 --
 ALTER TABLE `lokasi_kkn`
-  MODIFY `id_lokasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_lokasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `lokasi_kkn_mahasiswa`
@@ -83321,13 +83317,13 @@ ALTER TABLE `lokasi_kkn_mahasiswa`
 -- AUTO_INCREMENT for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  MODIFY `id_mhs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_mhs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `nilai_kkn`
 --
 ALTER TABLE `nilai_kkn`
-  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `setting_kkn`

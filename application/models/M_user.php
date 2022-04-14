@@ -16,6 +16,12 @@ class M_user extends CI_Model
         $this->db->delete($table);
     }
 
+    public function hapusUserDpl($where, $table)
+    {
+        $this->db->where($where);
+        $this->db->delete($table);
+    }
+
     public function insert_data_multiple($dataMahasiswa = [])
     {
         $jumlah = count($dataMahasiswa);

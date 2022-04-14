@@ -154,7 +154,7 @@ class C_lokasiKkn extends CI_Controller
         $where = array('id_lokasi' => $id);
         $whereUserLogin = ['id_user' => $id];
         $this->M_lokasiKkn->hapusData($where, 'lokasi_kkn');
-        $this->M_user->hapusUser($whereUserLogin, 'login_user');
+        $this->M_lokasiKkn->hapusUserDesa($whereUserLogin, 'login_user');
         $this->session->set_flashdata('lokasi', '<div class="alert alert-success alert-dismissible fade show" role="alert">
         data berhasil dihapus!
          <button type="button"class="close" data-dismiss="alert" aria-label="Close">

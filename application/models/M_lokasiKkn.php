@@ -109,4 +109,10 @@ class M_lokasiKkn extends CI_Model
         $this->db->delete($table);
     }
 
+    public function hapusUserDesa($where, $table)
+    {
+        $this->db->where($where);
+        $this->db->delete($table);
+    }
+
 }

@@ -12,43 +12,43 @@
 
             <div class="form-group">
                 <label>Nama</label>
-                <input type="text" name="nama" class="form-control" required>
+                <input type="text" name="nama" value="<?= set_value('nama')?>" class="form-control" required>
                 <?php echo form_error('nama', '<div class="text-danger small ml-3">', '</div>') ?>
             </div>  
 
             <div class="form-group">
                 <label>NIM</label>
-                <input type="number" name="nim" class="form-control" required>
+                <input type="number" name="nim" class="form-control" value="<?= set_value('nim')?>" required>
                 <?php echo form_error('nim', '<div class="text-danger small ml-3">', '</div>') ?>
             </div> 
             
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" name="email" class="form-control" required> 
+                <input type="email" name="email" class="form-control" value="<?= set_value('email')?>" required> 
                 <?php echo form_error('email', '<div class="text-danger small ml-3">', '</div>') ?>
             </div>
 
             <div class="form-group">
                 <label>Tempat Lahir</label>
-                <input type="text" name="tempat_lahir" class="form-control" required>
+                <input type="text" name="tempat_lahir" class="form-control" value="<?= set_value('tempat_lahir')?>" required>
                 <?php echo form_error('tempat_lahir', '<div class="text-danger small ml-3">', '</div>') ?>
             </div>
 
             <div class="form-group">
                 <label>Tanggal Lahir</label>
-                <input type="date" name="tanggal_lahir" class="form-control" required>
+                <input type="date" name="tanggal_lahir" class="form-control" value="<?= set_value('tanggal_lahir')?>" required>
                 <?php echo form_error('tanggal_lahir', '<div class="text-danger small ml-3">', '</div>') ?>
             </div>
 
             <div class="form-group">
                 <label>Alamat</label>
-                <input type="text" name="alamat" class="form-control" required>
+                <input type="text" name="alamat" class="form-control" value="<?= set_value('alamat')?>" required>
                 <?php echo form_error('alamat', '<div class="text-danger small ml-3">', '</div>') ?>
             </div>
 
             <div class="form-group">
                 <label>Asal Daerah</label>
-                <input type="text" name="asal_daerah" class="form-control" required>
+                <input type="text" name="asal_daerah" class="form-control" value="<?= set_value('asal_daerah')?>" required>
                 <?php echo form_error('asal_daerah', '<div class="text-danger small ml-3">', '</div>') ?>
             </div>
 
@@ -87,7 +87,7 @@
 
             <div class="form-group">
                 <label>No HP</label>
-                <input type="text" name="no_hp" class="form-control" required>
+                <input type="text" name="no_hp" class="form-control" value="<?= set_value('no_hp')?>" required>
                 <?php echo form_error('no_hp', '<div class="text-danger small ml-3">', '</div>') ?>
             </div>
 

@@ -13,6 +13,7 @@
     <?php if($kkn->email == null || $kkn->tempat_lahir == null || $kkn->tanggal_lahir == null || $kkn->alamat == null || $kkn->fakultas_id == null || $kkn->jurusan_id == null || $kkn->no_hp == null || $kkn->asal_daerah == null): ?>
 
         <h3 style="color:red;" class="p-4 mt-4 text-center"><strong>Silakan Lengkapi semua Data Anda Pada Menu Profil untuk dapat mendaftar KKN!</strong></h3>
+    
     <?php else: ?>
     
     <?php if(  strtotime(date('Y-m-d')) >= strtotime($cekJadwalKkn->tgl_mulai_kkn) && strtotime(date('Y-m-d')) <= strtotime($cekJadwalKkn->tgl_akhir_kkn) )  :?>
@@ -21,12 +22,14 @@
             
             <div class="row">   
                 <div class="col-md-4 d-flex justify-content-center">
-                    <div class="card mb-4 text-center" style="width: 18rem;">
+                    <div class="card mb-4 " style="width: 18rem;">
                     <img class="card-img-top" src="<?= base_url('assets/uploads/').$dataKkn->foto ?>"  alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title"><?= ucwords($kkn->nama_mhs) ?></h5>
                         <p class="card-text">Semester : <b><?= $dataKkn->semester ?></b></p>
                         <p class="card-text">Jenis KKN : <b><?= strtoupper($dataKkn->jenis_kkn) ?></b></p>
+                        <p class="card-text">Lokasi KKN : <b>Prov. <?= strtoupper($lokasiKkn->name_province) ?>, Kab. <?= strtoupper($lokasiKkn->name_regencie) ?>, Kec. <?= strtoupper($lokasiKkn->name_district) ?>, Kel/Desa <?= strtoupper($lokasiKkn->name_village) ?></b></p>
+                        <p class="card-text">Pembimbing : <b><?= strtoupper($pembimbing->nama_dpl) ?></b></p>
                         
                     </div>
                     </div>
@@ -288,15 +291,17 @@
 
         <?php endif;?>
     
-    <?php elseif(  strtotime(date('Y-m-d')) >= strtotime($cekJadwalKkn->tgl_mulai_kkn) && strtotime(date('Y-m-d')) >= strtotime($cekJadwalKkn->tgl_akhir_kkn) && $kkn->nama_mhs != null):?>
+    <?php elseif(  strtotime(date('Y-m-d')) >= strtotime($cekJadwalKkn->tgl_mulai_kkn) && strtotime(date('Y-m-d')) >= strtotime($cekJadwalKkn->tgl_akhir_kkn) && $dataKkn != null):?>
         <div class="row">   
                 <div class="col-md-4 d-flex justify-content-center">
-                    <div class="card mb-4 text-center" style="width: 18rem;">
+                    <div class="card mb-4 " style="width: 18rem;">
                     <img class="card-img-top" src="<?= base_url('assets/uploads/').$dataKkn->foto ?>"  alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title"><?= ucwords($kkn->nama_mhs) ?></h5>
-                        <p class="card-text">Semester : <b><?= $dataKkn->semester ?></b></p>
+                        <p class="card-text ml-auto">Semester : <b><?= $dataKkn->semester ?></b></p>
                         <p class="card-text">Jenis KKN : <b><?= strtoupper($dataKkn->jenis_kkn) ?></b></p>
+                        <p class="card-text">Lokasi KKN : <b>Prov. <?= strtoupper($lokasiKkn->name_province) ?>, Kab. <?= strtoupper($lokasiKkn->name_regencie) ?>, Kec. <?= strtoupper($lokasiKkn->name_district) ?>, Kel/Desa <?= strtoupper($lokasiKkn->name_village) ?></b></p>
+                        <p class="card-text">Pembimbing : <b><?= strtoupper($pembimbing->nama_dpl) ?></b></p>
                         
                     </div>
                     </div>
@@ -367,6 +372,9 @@
             
                 </div>
             </div>
+    
+    <?php elseif(strtotime(date('Y-m-d')) >= strtotime($cekJadwalKkn->tgl_mulai_kkn) && strtotime(date('Y-m-d')) >= strtotime($cekJadwalKkn->tgl_akhir_kkn) && $dataKkn == null) : ?>
+        <h1 class="text-center p-4 mt-4" style="color:red">Anda Belum Terdaftar</h1>
     <?php else : ?>
         <h1 class="text-center p-4 mt-4" style="color:red">Jadwal Pendaftaran KKN dimulai pada tanggal <?= date('d M Y', strtotime($cekJadwalKkn->tgl_mulai_kkn)) ?> s/d <?= date('d M Y', strtotime($cekJadwalKkn->tgl_akhir_kkn)) ?></h1> 
     <?php endif;?>

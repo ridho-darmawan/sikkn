@@ -34,6 +34,7 @@ class C_login extends CI_Controller
                 foreach ($cek->result() as $ck) {
                     $sess_data['username'] = $ck->username;
                     $sess_data['level'] = $ck->level;
+                    $sess_data['id_user'] = $ck->id_user;
 
                     $this->session->set_userdata($sess_data);
                 }

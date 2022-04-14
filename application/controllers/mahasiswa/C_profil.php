@@ -15,12 +15,12 @@ class C_profil extends CI_Controller
             'nama' => $data->username,
             'level' => $data->level,
             'title' => $data->level,
-            'mahasiswa' => $this->M_profil->all_data($data->id_user)->row()
+            'mahasiswa' => $this->M_profil->all_data($this->session->userdata['id_user'])->row()
         );
         $data['title'] = "Data Mahasiswa";
         // $data['mahasiswa'] = $this->M_profil->all_data($data->id_user)->row();
 
-        // var_dump($data['mahasiswa']);die;
+        // var_dump($this->session->userdata['id_user']);die;
         $this->load->view('templates_administrator/header', $data);
         $this->load->view('templates_administrator/sidebar', $data);
         $this->load->view('mhs/v_profil', $data);
@@ -74,50 +74,75 @@ class C_profil extends CI_Controller
 
         $foto1 = $this->input->post('foto_profil');
 
-        if ($foto) {
-            // unlink(FCPATH."/assets/uploads/".$rekom); //hapus file lama
-            $randomString = random_string('numeric', 3);
-            $config['max_size'] = '10000';
-            $config['allowed_types'] = 'jpg|jpeg|png';
-            $config['upload_path'] = 'assets/uploads';
-            $config['file_name'] = "foto_profil-" .$dataMahasiswa->nim . "-" . $randomString;
-            $config['overwrite'] = true;
+        $dataMhs = $this->M_mahasiswa->getData('mahasiswa',$id)->row();
 
-            $this->load->library('upload');
-            $this->upload->initialize($config);
-            if ($this->upload->do_upload('foto_profil')) {
-                unlink(FCPATH . "/assets/uploads/" . $foto1); //hapus file lama
-                $userfile = $this->upload->data('file_name');
-                $this->db->set('foto', $userfile);
-            } else {
-                echo "Gagal Upload";
-                die();
+       
+
+         if($email != $dataMhs->email) {
+            $is_unique_email =  '|is_unique[mahasiswa.email]';
+         } else {
+            $is_unique_email =  '';
+         }
+
+       
+        $this->form_validation->set_rules('email','EMAIL','required'.$is_unique_email, 
+            [
+                'is_unique' => 'Email Telah Terdaftar'
+            ]
+        );
+
+        if($this->form_validation->run() != false){
+            if ($foto) {
+                // unlink(FCPATH."/assets/uploads/".$rekom); //hapus file lama
+                $randomString = random_string('numeric', 3);
+                $config['max_size'] = '10000';
+                $config['allowed_types'] = 'jpg|jpeg|png';
+                $config['upload_path'] = 'assets/uploads';
+                $config['file_name'] = "foto_profil-" .$nim . "-" . $randomString;
+                $config['overwrite'] = true;
+    
+                $this->load->library('upload');
+                $this->upload->initialize($config);
+                if ($this->upload->do_upload('foto_profil')) {
+                    // unlink(FCPATH . "/assets/uploads/" . $foto1); //hapus file lama
+                    $userfile = $this->upload->data('file_name');
+                    $this->db->set('foto_profil', $userfile);
+                } else {
+                    echo "Gagal Upload";
+                    die();
+                }
             }
+            
+    
+            $data = [
+                'nama_mhs' => $nama,
+                'nim' => $nim,
+                'email' => $email,
+                'tempat_lahir' => $tempat_lahir,
+                'tanggal_lahir' => $tanggal_lahir,
+                'alamat' => $alamat,
+                'asal_daerah' => $asal_daerah,
+                'agama' => $agama,
+                'jurusan_id' => $jurusan,
+                'fakultas_id' => $fakultas,
+                'no_hp' => $no_hp,
+            ];
+    
+            $this->M_profil->updateData($id, $data, 'mahasiswa');
+            $this->session->set_flashdata('mhs_profil', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            Data berhasil diubah!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times; </span>
+            </button>
+            </div>');
+            redirect('mahasiswa/C_profil');
+        }else{
+            $this->edit($id);
         }
-        
 
-        $data = [
-            'nama_mhs' => $nama,
-            'nim' => $nim,
-            'email' => $email,
-            'tempat_lahir' => $tempat_lahir,
-            'tanggal_lahir' => $tanggal_lahir,
-            'alamat' => $alamat,
-            'asal_daerah' => $asal_daerah,
-            'agama' => $agama,
-            'jurusan_id' => $jurusan,
-            'fakultas_id' => $fakultas,
-            'no_hp' => $no_hp,
-        ];
 
-        $this->M_profil->updateData($id, $data, 'mahasiswa');
-        $this->session->set_flashdata('mhs_profil', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-        Data berhasil diubah!
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times; </span>
-        </button>
-        </div>');
-        redirect('mahasiswa/C_profil');
+
+       
     }
 
     public function changePassword()

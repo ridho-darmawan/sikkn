@@ -7,7 +7,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 <div class="sidebar-brand-icon ">
                     <i class="fas fa-university"></i>
                 </div>
@@ -61,12 +61,12 @@
 
                 </li>
 
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="<?= site_url('administrator/C_dpl/mahasiswaDpl') ?>">
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= site_url('administrator/C_dpl/profil') ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Rekap Data Mahasiswa</span></a>
+                    <span>Profil</span></a>
 
-                </li> -->
+                </li>
 
                 <?php elseif($this->session->userdata('level') == 'desa') : ?>
 
@@ -99,7 +99,7 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item active">
-                    <a class="nav-link" href="<?= site_url('C_dashboard') ?>">
+                    <a class="nav-link" href="<?= site_url('C_dashboard/admin') ?>">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
 

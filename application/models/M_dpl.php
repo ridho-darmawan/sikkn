@@ -8,6 +8,12 @@ class M_dpl extends CI_Model
         return $this->db->get($table);
     }
 
+    public function profilDpl($id,$table)
+    {
+        $this->db->where('id_dpl',$id);
+        return $this->db->get($table);
+    }
+
     public function insert_data($data, $table)
     {
         $this->db->insert($table, $data);

@@ -64,7 +64,7 @@
 		<!-- /.login-logo -->
 		<div class="login-box-body">
 
-			<img src="<?= base_url('assets/image/download.png'); ?>" class="logo img-fluid" width="100">
+			<img src="<?= base_url('assets/image/logo-univ.png'); ?>" class="logo img-fluid" width="100">
 			<p class="login-box-msg">Selamat Datang di <br> <b class="logo">Sistem Informasi KKN LPPM UNIMA</b></p>
 			
 			<?php if($this->session->flashdata('pesan')) :?>

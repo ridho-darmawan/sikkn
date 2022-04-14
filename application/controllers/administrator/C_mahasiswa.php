@@ -62,40 +62,69 @@ class C_mahasiswa extends CI_Controller
         $asal_daerah = $this->input->post('asal_daerah');
         $agama = $this->input->post('agama');
 
-
-        $data = array(
-            'nama_mhs'  => $nama,
-            'nim'  => $nim,
-            'email'  => $email,
-            'tempat_lahir'  => $tempat_lahir,
-            'tanggal_lahir'  => $tanggal_lahir,
-            'alamat'  => $alamat,
-            'fakultas_id'  => $fakultas,
-            'jurusan_id'  => $jurusan,
-            'no_hp'  => $no_hp,
-            'asal_daerah'   => $asal_daerah,
-            'agama' => $agama
+        $this->form_validation->set_rules('email','Email','is_unique[mahasiswa.email]', 
+            [
+                'is_unique' => 'Email Telah Terdaftar'
+            ]
         );
 
-        
+        $this->form_validation->set_rules('nim','NIM','is_unique[mahasiswa.nim]', 
+            [
+                'is_unique' => 'NIM Telah Terdaftar'
+            ]
+        );
 
-        $this->M_mahasiswa->insert_data($data, 'mahasiswa');
-        $id_mhs = $this->db->insert_id(); 
+        if($this->form_validation->run() != false){
+            $data = array(
+                'nama_mhs'  => $nama,
+                'nim'  => $nim,
+                'email'  => $email,
+                'tempat_lahir'  => $tempat_lahir,
+                'tanggal_lahir'  => $tanggal_lahir,
+                'alamat'  => $alamat,
+                'fakultas_id'  => $fakultas,
+                'jurusan_id'  => $jurusan,
+                'no_hp'  => $no_hp,
+                'asal_daerah'   => $asal_daerah,
+                'agama' => $agama
+            );
+    
+            
+            $this->M_mahasiswa->insert_data($data, 'mahasiswa');
+            $id_mhs = $this->db->insert_id(); 
+    
+            $dataLoginMhs = [
+                'username'  => $nim,
+                'password'  => md5($nim),
+                'level'     => 'mahasiswa',
+                'id_user'   => $id_mhs
+            ];
+            $this->M_user->insert_data($dataLoginMhs,'login_user');
+            $this->session->set_flashdata('mahasiswa', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            Data berhasil ditambahkan!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times; </span>
+            </button>
+            </div>');
+            redirect('administrator/C_mahasiswa');
+        }else{
+            $data = $this->User_model->ambil_data($this->session->userdata['username']);
+            $data = array(
+                'nama' => $data->username,
+                'level' => $data->level,
+                'title' => 'Form Mahasiswa',
+                'fakultas' =>$this->M_jurusan->getDataFakultas(),
+    
+            );
+    
+            $this->load->view('templates_administrator/header', $data);
+            $this->load->view('templates_administrator/sidebar', $data);
+            $this->load->view('administrator/mahasiswa/v_create_mahasiswa',$data);
+            $this->load->view('templates_administrator/footer');
+        }
 
-        $dataLoginMhs = [
-            'username'  => $nim,
-            'password'  => md5($nim),
-            'level'     => 'mahasiswa',
-            'id_user'   => $id_mhs
-        ];
-        $this->M_user->insert_data($dataLoginMhs,'login_user');
-        $this->session->set_flashdata('mahasiswa', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-        Data berhasil ditambahkan!
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times; </span>
-        </button>
-        </div>');
-        redirect('administrator/C_mahasiswa');
+
+       
     }
 
     public function edit($id)
@@ -133,28 +162,61 @@ class C_mahasiswa extends CI_Controller
         $asal_daerah = $this->input->post('asal_daerah');
         $agama = $this->input->post('agama');
 
-        $data = array(
-            'nama_mhs'  => $nama,
-            'nim'  => $nim,
-            'email'  => $email,
-            'tempat_lahir'  => $tempat_lahir,
-            'tanggal_lahir'  => $tanggal_lahir,
-            'alamat'  => $alamat,
-            'fakultas_id'  => $fakultas,
-            'jurusan_id'  => $jurusan,
-            'no_hp'  => $no_hp,
-            'asal_daerah'   => $asal_daerah,
-            'agama' => $agama
+        $dataMhs = $this->M_mahasiswa->getData('mahasiswa',$id)->row();
+
+        if($nim != $dataMhs->nim) {
+            $is_unique =  '|is_unique[mahasiswa.nim]';
+         } else {
+            $is_unique =  '';
+         }
+
+         if($email != $dataMhs->email) {
+            $is_unique_email =  '|is_unique[mahasiswa.email]';
+         } else {
+            $is_unique_email =  '';
+         }
+
+        $this->form_validation->set_rules('nim','NIM','required'.$is_unique, 
+            [
+                'is_unique' => 'NIM Telah Terdaftar'
+            ]
         );
 
-        $this->M_mahasiswa->updateData($id, $data, 'mahasiswa');
-        $this->session->set_flashdata('mahasiswa', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-        Data berhasil diubah!
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times; </span>
-        </button>
-        </div>');
-        redirect('administrator/C_mahasiswa');
+        $this->form_validation->set_rules('email','EMAIL','required'.$is_unique_email, 
+            [
+                'is_unique' => 'Email Telah Terdaftar'
+            ]
+        );
+
+        if($this->form_validation->run() != false){
+            $data = array(
+                'nama_mhs'  => $nama,
+                'nim'  => $nim,
+                'email'  => $email,
+                'tempat_lahir'  => $tempat_lahir,
+                'tanggal_lahir'  => $tanggal_lahir,
+                'alamat'  => $alamat,
+                'fakultas_id'  => $fakultas,
+                'jurusan_id'  => $jurusan,
+                'no_hp'  => $no_hp,
+                'asal_daerah'   => $asal_daerah,
+                'agama' => $agama
+            );
+    
+            $this->M_mahasiswa->updateData($id, $data, 'mahasiswa');
+            $this->session->set_flashdata('mahasiswa', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            Data berhasil diubah!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times; </span>
+            </button>
+            </div>');
+            redirect('administrator/C_mahasiswa');
+        }else{
+            $this->edit($id);
+        }
+        
+
+       
     }
 
     public function destroy($id, $nim)
