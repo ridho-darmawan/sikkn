@@ -79,14 +79,15 @@ class M_dashboard extends CI_Model
         return $this->db->get(); 
     }
 
-    // public function laporanKknMerdeka()
-    // {
-    //     $this->db->select('*');
-    //     $this->db->from('kkn a'); 
-    //     $this->db->where('jenis_kkn','kkn_merdeka');
-    //     $this->db->join('mahasiswa b', 'b.id_mhs=a.id_mhs', 'left');
-    //     $this->db->join('jurusan c', 'c.id_jurusan=b.jurusan_id', 'left');  
-    //     $this->db->join('fakultas d', 'd.id=c.fakultas_id', 'left');  
-    //     return $this->db->get(); 
-    // }
+    public function all_data($lokasi)
+    {
+        $this->db->select('*');
+        $this->db->from('kkn a'); 
+        $this->db->where('lokasi_kkn', $lokasi); 
+        $this->db->join('mahasiswa b', 'b.id_mhs=a.id_mhs_kkn', 'left');
+        $this->db->join('fakultas c', 'c.id=b.fakultas_id', 'left');
+        $this->db->join('jurusan d', 'd.id_jurusan=b.jurusan_id', 'left');  
+        return $this->db->get(); 
+       
+    }
 }

@@ -5,6 +5,13 @@
         Update Data KKN
     </div>
 
+    <button class="btn btn-sm btn-warning mb-4" onclick="goBack()">Kembali</button>
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script>
+
     <?php if($this->session->flashdata('kkn')) :?>
             <?php echo $this->session->flashdata('kkn') ?>
             <?php echo $this->session->unset_userdata('kkn'); ?>
@@ -76,10 +83,10 @@
                         <div class="form-group row ml-2 mb-4 mt-4">
                             <label for="" class="col-sm-2 col-form-label">Provinsi</label>
                             <div class="col-sm-3">
-                                <select class="form-control" id="sel_provinsi" name="provinsi"  >
+                                <select class="form-control" id="sel_provinsi" name="provinsi" readonly>
                                     <option value="">Pilih Provinsi</option>
                                     <?php foreach($getProvinsi as $value) : ?>
-                                        <option value="<?= $value->id ?>" <?= $value->id == $getLokasiKkn->provinsi_id ? 'selected':'' ?>><?= $value->name_province ?></option>
+                                        <option value="<?= $value->id ?>" <?= $value->id == $getLokasiKkn->province_id ? 'selected':'' ?>><?= $value->name_province ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -88,10 +95,10 @@
                         <div class="form-group row ml-2 mb-4 mt-4">
                             <label for="" class="col-sm-2 col-form-label">Kabupaten</label>
                             <div class="col-sm-3">
-                                <select class="form-control" name="kabupaten" id="sel_kabupaten" >
+                                <select class="form-control" name="kabupaten" id="sel_kabupaten" readonly>
                                     <option value="">Pilih Kabupaten</option>
                                     <?php foreach($getKab as $value) : ?>
-                                        <option value="<?= $value->kabupaten_id ?>" <?= $value->kabupaten_id == $getLokasiKkn->kabupaten_id ? 'selected':'' ?>><?= $value->name_regencie ?></option>
+                                        <option value="<?= $value->kabupaten_id ?>" <?= $value->kabupaten_id == $getLokasiKkn->regency_id ? 'selected':'' ?>><?= $value->name_regencie ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -100,10 +107,10 @@
                         <div class="form-group row ml-2 mb-4 mt-4">
                             <label for="" class="col-sm-2 col-form-label">Kecamatan</label>
                             <div class="col-sm-3">
-                                <select class="form-control" id="sel_kecamatan" name="kecamatan" >
+                                <select class="form-control" id="sel_kecamatan" name="kecamatan"  readonly>
                                     <option value="">Pilih Kecamatan</option>
                                     <?php foreach($getKec as $value) : ?>
-                                        <option value="<?= $value->kecamatan_id ?>" <?= $value->kecamatan_id == $getLokasiKkn->kecamatan_id ? 'selected':'' ?>><?= $value->name_district ?></option>
+                                        <option value="<?= $value->kecamatan_id ?>" <?= $value->kecamatan_id == $getLokasiKkn->district_id ? 'selected':'' ?> ><?= $value->name_district ?></option>
                                     <?php endforeach ?>
                                 
                                 </select>
@@ -113,10 +120,10 @@
                         <div class="form-group row ml-2 mb-4 mt-4">
                             <label for="" class="col-sm-2 col-form-label">Desa/Kelurahan</label>
                             <div class="col-sm-3">
-                                <select class="form-control" id="sel_desa_kkn" name="desa" value="<?= $kkn->lokasi_kkn ?>">
+                                <select class="form-control" id="sel_desa_kkn" name="desa" readonly>
                                     <option value="">Pilih Desa/Kelurahan</option>
                                     <?php foreach($getDesa as $value) : ?>
-                                        <option value="<?= $value->desa_id ?>" <?= $value->desa_id == $getLokasiKkn->desa_id ? 'selected':'' ?>><?= $value->name_village ?></option>
+                                        <option value="<?= $value->desa_id ?>" <?= $value->kecamatan_id == $getLokasiKkn->district_id ? 'selected':'' ?> ><?= $value->name_village ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>

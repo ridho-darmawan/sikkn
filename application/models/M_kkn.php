@@ -135,6 +135,14 @@ class M_kkn extends CI_Model
         return $query;
     }
 
+    
+
+    function get_kuota($kec_id){
+        $this->db->join('villages','villages.id = lokasi_kkn.desa_Id');
+        $query = $this->db->get_where('lokasi_kkn', array('kecamatan_id' => $kec_id));
+        return $query;
+    }
+
     public function getLaporan($table, $id)
     {
         $this->db->where('id_kkn', $id);
@@ -208,6 +216,18 @@ class M_kkn extends CI_Model
     {
         $this->db->where('id_nilai', $id);
         return $this->db->update($table, $data);
+    }
+
+    public function lokasiKkn($lokasi,$table)
+    {
+        $this->db->where('desa_id',$lokasi);
+        return $this->db->get($table);
+    }
+
+    public function updateKuotaKkn($where,$data,$table)
+    {
+        $this->db->where('desa_id',$where);
+        return $this->db->update($table,$data);
     }
 
 }

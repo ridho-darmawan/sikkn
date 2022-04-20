@@ -46,8 +46,13 @@ class C_dashboard extends CI_Controller
             'nama' => $data->username,
             'level' => $data->level,
             'title' => $data->level,
-            'mahasiswa' => $this->M_dashboard->getMahasiswa($nim)->row()
+            'mahasiswa' => $this->M_dashboard->getMahasiswa($nim)->row(),
+            'cekJadwalKkn' => $this->M_kkn->jadwalKkn('setting_kkn')->row(),
+            
         );
+        $data['kkn'] = $this->M_kkn->getData($this->session->userdata['username'],'mahasiswa')->row();
+        $data['dataKkn'] = $this->M_kkn->getDataKkn($data['kkn']->id_mhs,'kkn')->row();
+        $data['mahasiswa1'] = $this->M_dashboard->all_data($data['dataKkn']->lokasi_kkn)->result();
         $this->load->view('templates_administrator/header', $data);
         $this->load->view('templates_administrator/sidebar',$data);
         $this->load->view('administrator/v_dashboardMahasiswa', $data);

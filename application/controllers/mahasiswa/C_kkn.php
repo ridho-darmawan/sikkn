@@ -71,7 +71,7 @@ class C_kkn extends CI_Controller
 
             $jenis_kkn                 = $this->input->post('jenis_kkn');
             $semester                  = $this->input->post('semester');
-            $lokasi_kkn                  = $this->input->post('desa');
+            $lokasi_kkn                = $this->input->post('desa');
             $nama_lengkap              = $dataMahasiswa->nama_mhs;
             $fakultas                  = $dataMahasiswa->fakultas_id;
             $jurusan_prodi             = $dataMahasiswa->jurusan_id;
@@ -86,9 +86,7 @@ class C_kkn extends CI_Controller
             $krs = $_FILES['krs']['name'];
             $slip = $_FILES['slip']['name'];
             $sk_bm = $_FILES['sk_bm']['name'];
-            // $sk_ukt = $_FILES['sk_ukt']['name'];
             $sk_sehat = $_FILES['sk_sehat']['name'];
-            // $rekom_kkn = $_FILES['rekom_kkn']['name'];
             $foto_almamater = $_FILES['foto_almamater']['name'];
 
             $randomString = random_string('numeric', 3);
@@ -117,7 +115,6 @@ class C_kkn extends CI_Controller
             }
 
             if ($rekom_jurusanprodi !== "") {
-                // unlink(FCPATH."/assets/uploads/".$rekom); //hapus file lama
                 $randomString = random_string('numeric', 3);
                 $config['max_size'] = '1024';
                 $config['allowed_types'] = 'pdf|jpg|docx|jpeg|png';
@@ -128,7 +125,6 @@ class C_kkn extends CI_Controller
                 $this->load->library('upload');
                 $this->upload->initialize($config);
                 if ($this->upload->do_upload('rekom')) {
-                    // unlink(FCPATH."/assets/uploads/".$rekom); //hapus file lama
                     $userfile = $this->upload->data('file_name');
                     $this->db->set('rekom_jurusanprodi', $userfile);
                 } else {
@@ -230,9 +226,20 @@ class C_kkn extends CI_Controller
 
             );
 
-            $this->M_kkn->insert_data($data, 'kkn');
+            $dataLokasiKkn = $this->M_kkn->lokasiKkn($lokasi_kkn,'lokasi_kkn')->row();
+
+            // $updateKuotaLokasiKkn = $dataLokasiKkn->kuota_kkn - $dataLokasiKkn->sisa_kuota;
+            $sisaKuota = $dataLokasiKkn->sisa_kuota + 1;
+
+            $dataUpdateKuotaKkn = [
+                'sisa_kuota' =>$sisaKuota
+            ];
             
+
+            $this->M_kkn->insert_data($data, 'kkn');            
             $idKkn = $this->db->insert_id();
+
+            $this->M_kkn->updateKuotaKkn($lokasi_kkn,$dataUpdateKuotaKkn,'lokasi_kkn');
 
             $this->session->set_flashdata('kkn', '<div class="alert alert-success alert-dismissible fade show" role="alert">
             Data berhasil ditambahkan!
@@ -261,8 +268,15 @@ class C_kkn extends CI_Controller
 
         public function get_desa()
         { 
-
             $kec_id = $this->input->post('id',TRUE);
+            // $cekKuotaKkn = $this->M_kkn->get_kuota($kec_id)->result();
+
+            // foreach($cekKuotaKkn as $value){
+            //     if ($value->kuota_kkn == $value->sisa_kuota) {
+            //         # code...
+            //     }
+            // }
+            // var_dump($cekKuotaKkn);die;
             $data = $this->M_kkn->get_desa($kec_id)->result();
             echo json_encode($data);
         }
@@ -296,11 +310,11 @@ class C_kkn extends CI_Controller
             $data['title'] = "Update Data KKN ";
             $data['kkn'] = $this->M_kkn->getIdKkn($id,'kkn')->row();
             $data['getLokasiKkn'] = $this->M_kkn->getLokasiKknMahasiswa($id,'kkn')->row();
-            // var_dump($data['getLokasiKkn']->id_kkn);die;
+            // var_dump($data['getLokasiKkn']);die;
             $data['getProvinsi'] = $this->M_kkn->getProvinsi()->result();
-            $data['getKab'] = $this->M_kkn->get_kabupaten($data['getLokasiKkn']->provinsi_id)->result();
-            $data['getKec'] = $this->M_kkn->get_kecamatan($data['getLokasiKkn']->kabupaten_id)->result();
-            $data['getDesa'] = $this->M_kkn->get_desa($data['getLokasiKkn']->kecamatan_id)->result();
+            $data['getKab'] = $this->M_kkn->get_kabupaten($data['getLokasiKkn']->province_id)->result();
+            $data['getKec'] = $this->M_kkn->get_kecamatan($data['getLokasiKkn']->regency_id)->result();
+            $data['getDesa'] = $this->M_kkn->get_desa($data['getLokasiKkn']->district_id)->result();
           
             $this->load->view('templates_administrator/header', $data);
             $this->load->view('templates_administrator/sidebar', $data);
@@ -313,24 +327,7 @@ class C_kkn extends CI_Controller
         public function update()
         {
             $dataMahasiswa = $this->M_kkn->getDataMahasiswa('mahasiswa',$this->session->userdata('username'))->row();
-                // $this->_rules();
-
-                // if ($this->form_validation->run() == FALSE) {
-                //     $this->session->set_flashdata('kkn', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                //     gagal
-                //     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                //     <span aria-hidden="true">&times; </span>
-                //     </button>
-                //     </div>');
-                //     $this->index();
-                // } else {
-                    // $this->_rules();
-
-                    // if ($this->form_validation->run() == FALSE) {
-                    //     $this->edit('id');
-                    // } else {
-    
-                // get value file folder
+               
     
                 $rekom                      = $this->input->post('rekom');
                 $krs1                       = $this->input->post('krs1');
@@ -339,31 +336,21 @@ class C_kkn extends CI_Controller
                 $sk_ukt1                    = $this->input->post('sk_ukt1');
                 $foto_almamater1            = $this->input->post('foto_almamater1');
                 $sk_sehat1                  = $this->input->post('sk_sehat1');
-                // $rekom_kkn1                 = $this->input->post('rekom_kkn1');
-    
-    
-    
-    
+
                 $id                        = $this->input->post('id'); 
                 $jenis_kkn                 = $this->input->post('jenis_kkn');
                 $semester                  = $this->input->post('semester');
-                $lokasi_kkn                  = $this->input->post('desa');
+                $lokasi_kkn                = $this->input->post('desa');
 
                 $rekom_jurusanprodi        = $_FILES['rekom']['name'];
                 $krs                       = $_FILES['krs']['name'];
                 $slip                      = $_FILES['slip']['name'];
                 $sk_bm                     = $_FILES['sk_bm']['name'];
-                // $sk_ukt                    = $_FILES['sk_ukt']['name'];
                 $foto                       = $_FILES['foto_almamater']['name'];
-                $sk_sehat                  = $_FILES['sk_sehat']['name'];
-                // $rekom_kkn                 = $_FILES['rekom_kkn']['name'];
-    
-                // var_dump($rekom_jurusanprodi);die;   
-    
+                $sk_sehat                  = $_FILES['sk_sehat']['name'];    
     
     
                 if ($rekom_jurusanprodi) {
-                    // unlink(FCPATH."/assets/uploads/".$rekom); //hapus file lama
                     $randomString = random_string('numeric', 3);
                     $config['max_size'] = '10000';
                     $config['allowed_types'] = 'pdf|jpg|docx|jpeg|png';
@@ -444,28 +431,7 @@ class C_kkn extends CI_Controller
                         echo "Gagal Upload";
                         die();
                     }
-                }
-    
-                // if ($sk_ukt) {
-                //     // unlink(FCPATH."/assets/uploads/".$rekom); //hapus file lama
-                //     $randomString = random_string('numeric', 3);
-                //     $config['max_size'] = '10000';
-                //     $config['allowed_types'] = 'pdf|jpg|docx|jpeg|png';
-                //     $config['upload_path'] = 'assets/uploads';
-                //     $config['file_name'] = "sk_ukt-" .$dataMahasiswa->nim . "-" . $randomString;
-                //     $config['overwrite'] = true;
-    
-                //     $this->load->library('upload');
-                //     $this->upload->initialize($config);
-                //     if ($this->upload->do_upload('sk_ukt')) {
-                //         unlink(FCPATH . "/assets/uploads/" . $sk_ukt1); //hapus file lama
-                //         $userfile = $this->upload->data('file_name');
-                //         $this->db->set('sk_ukt', $userfile);
-                //     } else {
-                //         echo "Gagal Upload";
-                //         die();
-                //     }
-                // }
+                }    
     
                 if ($foto) {
                     // unlink(FCPATH."/assets/uploads/".$rekom); //hapus file lama
@@ -509,28 +475,6 @@ class C_kkn extends CI_Controller
                     }
                 }
     
-                // if ($rekom_kkn) {
-                //     // unlink(FCPATH."/assets/uploads/".$rekom); //hapus file lama
-                //     $randomString = random_string('numeric', 3);
-                //     $config['max_size'] = '10000';
-                //     $config['allowed_types'] = 'pdf|jpg|docx|jpeg|png';
-                //     $config['upload_path'] = 'assets/uploads';
-                //     $config['file_name'] = "rekom_kkn-" .$dataMahasiswa->nim . "-" . $randomString;
-                //     $config['overwrite'] = true;
-    
-                //     $this->load->library('upload');
-                //     $this->upload->initialize($config);
-                //     if ($this->upload->do_upload('rekom_kkn')) {
-                //         unlink(FCPATH . "/assets/uploads/" . $rekom_kkn1); //hapus file lama
-                //         $userfile = $this->upload->data('file_name');
-                //         $this->db->set('rekom_kkn', $userfile);
-                //     } else {
-                //         echo "Gagal Upload";
-                //         die();
-                //     }
-                // }
-    
-    
                 $data = array(
                  
                     'semester'              => $semester,
@@ -541,14 +485,6 @@ class C_kkn extends CI_Controller
                     
                 $this->M_kkn->updateData($id, $data, 'kkn');
 
-                // $dataKknMahasiswa = [
-                //     'provinsi_id' => $this->input->post('provinsi'),
-                //     'kabupaten_id'  => $this->input->post('kabupaten'),
-                //     'kecamatan_id'  => $this->input->post('kecamatan'),
-                //     'desa_id'       =>$this->input->post('desa')
-                // ];
-    
-                // $this->M_kkn->updateLokasiKknMahasiswa($id,$dataKknMahasiswa,'lokasi_kkn_mahasiswa');
 
                 $this->session->set_flashdata('kkn', '<div class="alert alert-success alert-dismissible fade show" role="alert">
                      Data KKN berhasil diupdate!
@@ -557,7 +493,7 @@ class C_kkn extends CI_Controller
                  </button>
                  </div>');
                 redirect('mahasiswa/C_kkn');
-            // }
+    
         }
 
         public function downloadExcelKknReguler()
