@@ -53,6 +53,8 @@
 
     <!-- Page level custom scripts -->
     <script src="<?=base_url('assets/')?>js/demo/datatables-demo.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
 
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->

@@ -28,6 +28,12 @@
                 <i class="fas fa-list"></i>
                 Kelompok KKN
             </div>
+
+            <div class="alert alert-default" role="alert">
+                <h4>Pembimbing KKN : <b> <?= $pembimbing->nama_dpl ?> </b></h4>
+                <h4>NO HP Pembimbing KKN : <?= $pembimbing->no_hp ?></h4>
+            </div>
+            
             
             <div class="card-body">
             <div class="table-responsive">

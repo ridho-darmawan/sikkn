@@ -52,7 +52,13 @@ class C_dashboard extends CI_Controller
         );
         $data['kkn'] = $this->M_kkn->getData($this->session->userdata['username'],'mahasiswa')->row();
         $data['dataKkn'] = $this->M_kkn->getDataKkn($data['kkn']->id_mhs,'kkn')->row();
-        $data['mahasiswa1'] = $this->M_dashboard->all_data($data['dataKkn']->lokasi_kkn)->result();
+        if (empty($data['dataKkn'])) {
+            $data['mahasiswa1'] = [];
+        }else{
+            $data['mahasiswa1'] = $this->M_dashboard->all_data($data['dataKkn']->lokasi_kkn)->result();
+            $data['pembimbing'] = $this->M_kkn->getPembimbing($data['dataKkn']->lokasi_kkn)->row();
+        }
+        
         $this->load->view('templates_administrator/header', $data);
         $this->load->view('templates_administrator/sidebar',$data);
         $this->load->view('administrator/v_dashboardMahasiswa', $data);
@@ -63,13 +69,13 @@ class C_dashboard extends CI_Controller
     {
         $data = $this->User_model->ambil_data($this->session->userdata['username']);
 
-        // var_dump($data);die;
         $nim = $data->id_user;
         $data = array(
             'nama' => $data->username,
             'level' => $data->level,
             'title' => $data->level,
             'username' =>$data->username,
+            'totalPendaftar' =>sda,
         );
         $this->load->view('templates_administrator/header', $data);
         $this->load->view('templates_administrator/sidebar',$data);
