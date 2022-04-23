@@ -33,6 +33,7 @@
                     <th>Fakultas</th>
                     <th>Jurusan</th>
                     <th>No HP</th>
+                    <th>JK</th>
                     <th>Edit</th>
                     <th>Hapus</th>
                 </tr>
@@ -51,6 +52,7 @@
                         <td><?php echo $value->nama ?></td>
                         <td><?php echo $value->nama_jurusan ?></td>
                         <td><?php echo $value->no_hp ?></td>
+                        <td><?php echo $value->jk ?></td>
 
                         <td width="20px">
                             <?php echo anchor('administrator/C_mahasiswa/edit/' . $value->id_mhs, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?>

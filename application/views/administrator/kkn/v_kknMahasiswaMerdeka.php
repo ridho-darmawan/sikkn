@@ -29,6 +29,7 @@
                     <th>Jurusan</th>
                     <th>No HP</th>
                     <th>Agama</th>
+                    <th>jk</th>
                     <th>Asal Daerah</th>
                     <th>File Dokumen</th>
                     <th>Laporan</th>
@@ -53,6 +54,7 @@
                         <td><?php echo $value->nama_jurusan ?></td>
                         <td><?php echo $value->no_hp ?></td>
                         <td><?php echo $value->agama ?></td>
+                        <td><?php echo $value->jk ?></td>
                         <td><?php echo $value->asal_daerah ?></td>
                         <td>
                             <?php echo anchor('mahasiswa/C_kkn/downloadZip/' . $value->id_kkn, '<div class="btn btn-sm btn-info mr-3"><i class="fa fa-download"> Download File</i></div>') ?>

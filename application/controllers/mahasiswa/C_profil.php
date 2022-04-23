@@ -67,6 +67,7 @@ class C_profil extends CI_Controller
         $alamat   = $this->input->post('alamat');
         $asal_daerah   = $this->input->post('asal_daerah');
         $agama   = $this->input->post('agama');
+        $jk   = $this->input->post('jk');
         $jurusan   = $this->input->post('jurusan');
         $fakultas   = $this->input->post('fakultas');
         $no_hp   = $this->input->post('no_hp');
@@ -126,6 +127,7 @@ class C_profil extends CI_Controller
                 'jurusan_id' => $jurusan,
                 'fakultas_id' => $fakultas,
                 'no_hp' => $no_hp,
+                'jk' => $jk,
             ];
     
             $this->M_profil->updateData($id, $data, 'mahasiswa');

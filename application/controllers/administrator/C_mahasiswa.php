@@ -161,6 +161,7 @@ class C_mahasiswa extends CI_Controller
         $no_hp = $this->input->post('no_hp');
         $asal_daerah = $this->input->post('asal_daerah');
         $agama = $this->input->post('agama');
+        $jk = $this->input->post('jk');
 
         $dataMhs = $this->M_mahasiswa->getData('mahasiswa',$id)->row();
 
@@ -200,7 +201,8 @@ class C_mahasiswa extends CI_Controller
                 'jurusan_id'  => $jurusan,
                 'no_hp'  => $no_hp,
                 'asal_daerah'   => $asal_daerah,
-                'agama' => $agama
+                'agama' => $agama,
+                'jk' => $jk
             );
     
             $this->M_mahasiswa->updateData($id, $data, 'mahasiswa');
