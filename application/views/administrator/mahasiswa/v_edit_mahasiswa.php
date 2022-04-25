@@ -74,6 +74,15 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="">Jenis Kelamin</label>
+                    <select class="form-control" name="jk">
+                        <option value="pria" <?= $mahasiswa->jk == 'pria' ? 'selected':'' ?>>Pria</option>
+                        <option value="wanita" <?= $mahasiswa->jk == 'wanita' ? 'selected':'' ?>>Wanita</option>
+                    
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="">Fakultas</label>
                     <select class="form-control" name="fakultas" id="sel_fakultas">
                         <option value="">Pilih Fakultas</option>

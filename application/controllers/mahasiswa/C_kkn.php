@@ -575,14 +575,22 @@ class C_kkn extends CI_Controller
                 
             );
 
+            // var_dump($data['getLokasiDpl']);die;
         
             foreach ($data['getLokasiDpl'] as $value) {
             array_push($data['lokasiBimbingan'],$value->desa_id);
             }
-            $data['mhsBimbinganReguler'] = $this->M_kkn->getMahasiswaBimbinganReguler($data['lokasiBimbingan'])->result();
-            $data['mhsBimbinganMerdeka'] = $this->M_kkn->getMahasiswaBimbinganMerdeka($data['lokasiBimbingan'])->result();
 
-            // var_dump($data['mhsBimbinganReguler']);die;
+            if (empty($data['getLokasiDpl'])) {
+                $data['mhsBimbinganReguler'] = [];
+                $data['mhsBimbinganMerdeka'] = [];
+            }else{
+
+                $data['mhsBimbinganReguler'] = $this->M_kkn->getMahasiswaBimbinganReguler($data['lokasiBimbingan'])->result();
+                $data['mhsBimbinganMerdeka'] = $this->M_kkn->getMahasiswaBimbinganMerdeka($data['lokasiBimbingan'])->result();
+            }
+
+
             $data['title'] = "Data Mahasiswa ";
         
             $this->load->view('templates_administrator/header', $data);

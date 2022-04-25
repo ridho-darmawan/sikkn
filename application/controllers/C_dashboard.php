@@ -75,12 +75,22 @@ class C_dashboard extends CI_Controller
             'level' => $data->level,
             'title' => $data->level,
             'username' =>$data->username,
-            'totalPendaftar' =>sda,
+            'totalPendaftar' => $this->M_dashboard->totalPendaftar()->num_rows(),
+            'totalPendaftarReguler' => $this->M_dashboard->totalPendaftarReguler()->num_rows(),
+            'totalPendaftarMerdeka' => $this->M_dashboard->totalPendaftarMerdeka()->num_rows(),
+            'totalDPL' => $this->M_dashboard->totalDPL()->num_rows(),
+            'fakultasGraph' => $this->M_dashboard->fakultasGraph()->result(),
+            'jurusanGraph' => $this->M_dashboard->jurusanGraph()->result(),
+            'genderGraph' => $this->M_dashboard->genderGraph()->result(),
+            'lokasiGraph' => $this->M_dashboard->lokasiGraph()->result(),
         );
+
+        // var_dump($data['fakultasGraph1']);die;
         $this->load->view('templates_administrator/header', $data);
         $this->load->view('templates_administrator/sidebar',$data);
         $this->load->view('administrator/v_dashboardAdmin', $data);
         $this->load->view('templates_administrator/footer');
+        $this->load->view('templates_administrator/chart');
     }
 
     public function desa()

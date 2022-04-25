@@ -90,4 +90,76 @@ class M_dashboard extends CI_Model
         return $this->db->get(); 
        
     }
+
+    public function totalPendaftar()
+    {
+        $this->db->select('*');
+        $this->db->from('kkn');
+        return $this->db->get();
+    }
+
+    public function totalPendaftarReguler()
+    {
+        $this->db->select('*');
+        $this->db->from('kkn');
+        $this->db->where('jenis_kkn','kkn_reguler');
+        return $this->db->get();
+    }
+
+    public function totalPendaftarMerdeka()
+    {
+        $this->db->select('*');
+        $this->db->from('kkn');
+        $this->db->where('jenis_kkn','kkn_merdeka');
+        return $this->db->get();
+    }
+
+    public function totalDPL()
+    {
+        $this->db->select('*');
+        $this->db->from('dpl');
+        return $this->db->get();
+    }
+
+  
+    public function fakultasGraph()
+    {
+        return $this->db->query("SELECT fakultas_id,nama, COUNT(fakultas_id) AS total
+        FROM mahasiswa
+        left join fakultas on fakultas.id = mahasiswa.fakultas_id
+        GROUP BY fakultas_id "
+        );
+      
+    }
+
+    public function jurusanGraph()
+    {
+        return $this->db->query("SELECT jurusan_id,nama_jurusan, COUNT(jurusan_id) AS total
+        FROM mahasiswa
+        left join jurusan on jurusan.id_jurusan = mahasiswa.jurusan_id
+        GROUP BY jurusan_id "
+        );
+      
+    }
+
+    public function genderGraph()
+    {
+        return $this->db->query("SELECT jk, COUNT(jk) AS total
+        FROM mahasiswa
+        GROUP BY jk "
+        );
+      
+    }
+
+    public function lokasiGraph()
+    {
+        return $this->db->query("SELECT lokasi_kkn,name_village, COUNT(lokasi_kkn) AS total
+        FROM kkn
+        left join villages on villages.id = kkn.lokasi_kkn
+        GROUP BY lokasi_kkn "
+        );
+      
+    }
+
+    
 }

@@ -131,6 +131,114 @@ class C_laporan extends CI_Controller
         redirect('mahasiswa/C_laporan');
     }
 
+    public function pelaporanMahasiswa()
+    {
+        $data['title'] = "Pelaporan";
+        $data = $this->User_model->ambil_data($this->session->userdata['username']);
+        $data = array(
+            'nama' => $data->username,
+            'level' => $data->level,
+            'title' => $data->level,
+            'lokasiKkn' => $this->M_laporan->getLokasiKkn()->result(),
+            'fakultas' => $this->M_laporan->getFakultas()->result(),
+            'jurusan' => $this->M_laporan->getJurusan()->result()
+        );
+
+        $byLokasi       = $this->input->post('lokasi');
+        $byFakultas     = $this->input->post('fakultas');
+        $byJurusan      = $this->input->post('jurusan');
+        $byJenisKkn     = $this->input->post('jenis_kkn');
+        $byJenisKelamin = $this->input->post('jk');
+
+        if ($byLokasi == null && $byFakultas == null  && $byJurusan == null && $byJenisKkn == null && $byJenisKelamin == null) 
+        {
+            $data['mahasiswa'] = [];
+        }
+        elseif($byLokasi != null && $byFakultas == null && $byJurusan == null && $byJenisKkn == null && $byJenisKelamin == null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByLokasi($byLokasi)->result();
+        }
+        elseif($byLokasi == null && $byFakultas != null && $byJurusan == null && $byJenisKkn == null && $byJenisKelamin == null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByFakultas($byFakultas)->result();
+        }
+
+        elseif($byLokasi == null && $byFakultas == null && $byJurusan != null && $byJenisKkn == null && $byJenisKelamin == null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByJurusan($byJurusan)->result();
+        }
+
+        elseif($byLokasi == null && $byFakultas == null && $byJurusan == null && $byJenisKkn != null && $byJenisKelamin == null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByJenisKkn($byJenisKkn)->result();
+        }
+
+        elseif($byLokasi == null && $byFakultas == null && $byJurusan == null && $byJenisKkn == null && $byJenisKelamin != null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByJenisKelamin($byJenisKelamin)->result();
+        }
+
+        elseif($byLokasi != null && $byFakultas != null && $byJurusan == null && $byJenisKkn == null && $byJenisKelamin == null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByLokasidanFakultas($byLokasi,$byFakultas)->result();
+        }
+
+        elseif($byLokasi != null && $byFakultas == null && $byJurusan != null && $byJenisKkn == null && $byJenisKelamin == null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByLokasidanJurusan($byLokasi,$byJurusan)->result();
+        }
+
+        elseif($byLokasi != null && $byFakultas == null && $byJurusan == null && $byJenisKkn != null && $byJenisKelamin == null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByLokasidanJenisKkn($byLokasi,$byJenisKkn)->result();
+        }
+
+        elseif($byLokasi != null && $byFakultas == null && $byJurusan == null && $byJenisKkn == null && $byJenisKelamin != null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByLokasidanJenisKelamin($byLokasi,$byJenisKelamin)->result();
+        }
+
+        elseif($byLokasi == null && $byFakultas != null && $byJurusan != null && $byJenisKkn == null && $byJenisKelamin == null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByFakultasdanJurusan($byFakultas,$byJurusan)->result();
+        }
+
+        elseif($byLokasi == null && $byFakultas != null && $byJurusan == null && $byJenisKkn != null && $byJenisKelamin == null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByFakultasdanJenisKkn($byFakultas,$byJenisKkn)->result();
+        }
+
+        elseif($byLokasi == null && $byFakultas != null && $byJurusan == null && $byJenisKkn == null && $byJenisKelamin != null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByFakultasdanJenisKelamin($byFakultas,$byJenisKelamin)->result();
+        }
+
+        elseif($byLokasi == null && $byFakultas == null && $byJurusan != null && $byJenisKkn != null && $byJenisKelamin == null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByJurusandanJenisKkn($byJurusan,$byJenisKkn)->result();
+        }
+
+        elseif($byLokasi == null && $byFakultas == null && $byJurusan != null && $byJenisKkn == null && $byJenisKelamin != null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByJurusandanJenisKelamin($byJurusan,$byJenisKelamin)->result();
+        }
+
+        elseif($byLokasi == null && $byFakultas == null && $byJurusan == null && $byJenisKkn != null && $byJenisKelamin != null)
+        {
+            $data['mahasiswa'] = $this->M_laporan->searchByJenisKkndanJenisKelamin($byJenisKkn,$byJenisKelamin)->result();
+        }
+
+        $this->load->view('templates_administrator/header', $data);
+        $this->load->view('templates_administrator/sidebar', $data);
+        $this->load->view('administrator/v_pelaporanMahasiswa', $data);
+        $this->load->view('templates_administrator/footer');
+    }
+
+   public function pelaporanDpl()
+   {
+       
+   }
+
 
 }
 

@@ -48,6 +48,17 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="">Jenis Kelamin</label>
+                    <select class="form-control" name="jk">
+                        <option value="pria" <?= $mahasiswa->jk == 'pria' ? 'selected':'' ?>>Pria</option>
+                        <option value="wanita" <?= $mahasiswa->jk == 'wanita' ? 'selected':'' ?>>Wanita</option>
+                    
+                    </select>
+                </div>
+
+                
+
+                <div class="form-group">
                     <label>Alamat</label>
                     <input type="text" name="alamat" class="form-control" value="<?= $mahasiswa->alamat ?>">
                     <?php echo form_error('alamat', '<div class="text-danger small ml-3">', '</div>') ?>

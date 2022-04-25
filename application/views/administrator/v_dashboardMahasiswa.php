@@ -45,6 +45,7 @@
                     <th>NIM</th>
                     <th>Email</th>
                     <th>TTL</th>
+                    <th>JK</th>
                     <th>Alamat</th>
                     <th>Fakultas</th>
                     <th>Jurusan</th>
@@ -61,6 +62,7 @@
                             <td><?php echo $value->nim ?></td>
                             <td><?php echo $value->email ?></td>
                             <td><?php echo $value->tempat_lahir ?>, <?php echo $value->tanggal_lahir ?></td>
+                            <td><?php echo $value->jk ?></td>
                             <td><?php echo $value->alamat ?></td>
                             <td><?php echo $value->nama ?></td>
                             <td><?php echo $value->nama_jurusan ?></td>

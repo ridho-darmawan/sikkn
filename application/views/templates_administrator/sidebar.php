@@ -161,6 +161,24 @@
 
                 </li> -->
 
+                
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities1" aria-expanded="true" aria-controls="collapseUtilities1">
+                        <i class="fas fa-fw fa-fw fa-wrench"></i>
+                        <span>Pelaporan</span>
+                    </a>
+                    <div id="collapseUtilities1" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Sub-Menu Pelaporan:</h6>
+                            <a class="collapse-item" href="<?php echo base_url('mahasiswa/C_laporan/pelaporanMahasiswa') ?>">Review Mahasiswa</a>
+                            <a class="collapse-item" href="<?php echo base_url('mahasiswa/C_laporan/pelaporanDpl') ?>">Review DPL</a>
+
+
+                        </div>
+                    </div>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                         <i class="fas fa-fw fa-fw fa-wrench"></i>
@@ -178,6 +196,8 @@
                 </li>
                 
             <?php endif ?>
+
+          
 
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url('C_login/logout') ?>">
