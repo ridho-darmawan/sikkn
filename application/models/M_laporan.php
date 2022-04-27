@@ -280,6 +280,36 @@ class M_laporan extends CI_Model
         return $this->db->get();
     }
 
+    public function getDpl()
+    {
+        return $this->db->get('dpl');
+    }
+
+    public function getDataMahasiswa($id_dpl)
+    {
+        $this->db->select('*');
+        $this->db->from('dpl');
+        $this->db->where('dpl.id_dpl',$id_dpl);
+        $this->db->join('lokasi_kkn', 'lokasi_kkn.id_dpl = dpl.id_dpl');
+        $this->db->join('villages', 'villages.id = lokasi_kkn.desa_id');
+        $this->db->join('kkn', 'kkn.lokasi_kkn = lokasi_kkn.desa_id');
+        $this->db->join('mahasiswa', 'mahasiswa.id_mhs = kkn.id_mhs_kkn');
+        $this->db->join('fakultas', 'fakultas.id = mahasiswa.fakultas_id');
+        $this->db->join('jurusan', 'jurusan.id_jurusan = mahasiswa.jurusan_id');
+        return $this->db->get();
+    }
+
+    public function reviewDpl($id_dpl)
+    {
+        $this->db->distinct();
+        $this->db->select('dpl.nama_dpl,lokasi_kkn.*,villages.name_village');
+        $this->db->from('dpl');
+        $this->db->where('dpl.id_dpl',$id_dpl);
+        $this->db->join('lokasi_kkn', 'lokasi_kkn.id_dpl = dpl.id_dpl');
+        $this->db->join('villages', 'villages.id = lokasi_kkn.desa_id');
+        return $this->db->get();
+    }
+
 
 }
 

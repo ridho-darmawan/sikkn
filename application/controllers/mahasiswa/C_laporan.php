@@ -236,7 +236,26 @@ class C_laporan extends CI_Controller
 
    public function pelaporanDpl()
    {
-       
+        $data['title'] = "Pelaporan";
+        $data = $this->User_model->ambil_data($this->session->userdata['username']);
+        $data = array(
+            'nama' => $data->username,
+            'level' => $data->level,
+            'title' => $data->level,
+            'dpl' => $this->M_laporan->getDpl()->result(),
+        );
+
+        $id_dpl = $this->input->post('id_dpl');
+
+        if ($id_dpl != null) {
+            $data['mahasiswa'] = $this->M_laporan->getDataMahasiswa($id_dpl)->result();
+        }
+
+
+        $this->load->view('templates_administrator/header', $data);
+        $this->load->view('templates_administrator/sidebar', $data);
+        $this->load->view('administrator/v_pelaporanDpl', $data);
+        $this->load->view('templates_administrator/footer');
    }
 
 
