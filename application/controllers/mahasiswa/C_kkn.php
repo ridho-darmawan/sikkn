@@ -226,9 +226,10 @@ class C_kkn extends CI_Controller
 
             );
 
+            
+
             $dataLokasiKkn = $this->M_kkn->lokasiKkn($lokasi_kkn,'lokasi_kkn')->row();
 
-            // $updateKuotaLokasiKkn = $dataLokasiKkn->kuota_kkn - $dataLokasiKkn->sisa_kuota;
             $sisaKuota = $dataLokasiKkn->sisa_kuota + 1;
 
             $dataUpdateKuotaKkn = [
@@ -260,26 +261,18 @@ class C_kkn extends CI_Controller
 
         public function get_kecamatan()
         { 
-
             $kab_id = $this->input->post('id',TRUE);
             $data = $this->M_kkn->get_kecamatan($kab_id)->result();
             echo json_encode($data);
         }
 
-        public function get_desa()
+        public function get_desa($get)
         { 
             $kec_id = $this->input->post('id',TRUE);
-            // $cekKuotaKkn = $this->M_kkn->get_kuota($kec_id)->result();
-
-            // foreach($cekKuotaKkn as $value){
-            //     if ($value->kuota_kkn == $value->sisa_kuota) {
-            //         # code...
-            //     }
-            // }
-            // var_dump($cekKuotaKkn);die;
             $data = $this->M_kkn->get_desa($kec_id)->result();
             echo json_encode($data);
         }
+        
 
         public function downloadZip($id)
         {
