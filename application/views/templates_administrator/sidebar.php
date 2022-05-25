@@ -68,10 +68,10 @@
 
                 </li>
 
-                <?php elseif($this->session->userdata('level') == 'desa') : ?>
+            <?php elseif($this->session->userdata('level') == 'desa') : ?>
 
                     <li class="nav-item active">
-                        <a class="nav-link" href="<?= site_url('C_dashboard') ?>">
+                        <a class="nav-link" href="<?= site_url('C_dashboard/desa') ?>">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                     </li>
