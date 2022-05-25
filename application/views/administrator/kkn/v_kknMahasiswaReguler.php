@@ -138,7 +138,7 @@
                         <?php endif;?>
                     </td>
                     <td><?php echo anchor('administrator/C_mahasiswa/editKkn/'.$value->id_kkn, '<div class="btn btn-sm btn-primary mr-3">Edit</div>') ?></td>
-                    <td><?php echo anchor('administrator/C_mahasiswa/destroyKkn/'.$value->id_kkn, '<div class="btn btn-sm btn-danger"> Hapus</div>') ?></td>
+                    <td><?php echo anchor('administrator/C_mahasiswa/destroyKkn/'.$value->id_kkn.'/'.$value->nim.'/'.$value->id_mhs, '<div class="btn btn-sm btn-danger"> Hapus</div>') ?></td>
 
             
                 </tr>
