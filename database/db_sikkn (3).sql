@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2022 at 04:37 AM
+-- Generation Time: Apr 29, 2022 at 02:05 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -7280,7 +7280,8 @@ CREATE TABLE `dpl` (
 --
 
 INSERT INTO `dpl` (`id_dpl`, `nama_dpl`, `tempat_lahir`, `tanggal_lahir`, `nip`, `no_hp`, `alamat`, `sk`) VALUES
-(14, 'M. Fikry, ST. M.Sc', 'tembilahan kota', '1996-10-21', '1', 2147483647, 'tg harapan', 'sk-510.pdf');
+(14, 'M. Fikry, ST. M.Sc', 'tembilahan kota', '1996-10-21', '1', 2147483647, 'tg harapan', 'sk-510.pdf'),
+(20, 'Abdul Shamad', 'tembilahan kota', '2022-04-06', '77', 6565656, 'oioio', 'sk-913.pdf');
 
 -- --------------------------------------------------------
 
@@ -7351,7 +7352,8 @@ CREATE TABLE `kkn` (
 --
 
 INSERT INTO `kkn` (`id_kkn`, `id_mhs_kkn`, `semester`, `rekom_kkn`, `krs`, `slip`, `sk_bm`, `sk_sehat`, `foto`, `jenis_kkn`, `rekom_jurusanprodi`, `laporan_kkn`, `lokasi_kkn`, `sertifikat`) VALUES
-(19, 26, 6, '', 'krs-111-529.pdf', 'slip-111-680.pdf', '', 'sk_sehat-111-452.pdf', 'foto_almamater--027.jpg', 'kkn_merdeka', 'rekom-jurusan-prodi-111-213.pdf', 'Laporan-109.pdf', '1403011006', 'sertifikat_ridho darmawan, S.T, M.Kom, Phd_111');
+(19, 26, 6, '', 'krs-111-529.pdf', 'slip-111-680.pdf', '', 'sk_sehat-111-452.pdf', 'foto_almamater--027.jpg', 'kkn_merdeka', 'rekom-jurusan-prodi-111-213.pdf', 'Laporan-109.pdf', '1403011006', 'sertifikat_ridho darmawan, S.T, M.Kom, Phd_111'),
+(22, 39, 8, '', 'krs-9000-137.pdf', 'slip-9000-207.pdf', '', 'sk_sehat-9000-952.pdf', 'foto_almamater-9000-759.jpg', 'kkn_reguler', 'rekom-jurusan-prodi-9000-436.pdf', NULL, '1403011006', NULL);
 
 -- --------------------------------------------------------
 
@@ -7377,7 +7379,11 @@ INSERT INTO `login_user` (`id`, `id_user`, `username`, `password`, `level`, `sta
 (28, 14, '1', 'c4ca4238a0b923820dcc509a6f75849b', 'dpl', 'Y'),
 (29, 7, 'kemuning muda', '5f4dcc3b5aa765d61d8327deb882cf99', 'desa', 'Y'),
 (30, 26, '111', '698d51a19d8a121ce581499d7b701668', 'mahasiswa', 'Y'),
-(31, 8, 'muara parlampungan', '375a6cd943f5494becf77e8be6713feb', 'desa', 'Y');
+(36, 15, '13', 'c51ce410c124a10e0db5e4b97fc2af39', 'dpl', 'Y'),
+(41, 20, '22', 'b6d767d2f8ed5d21a44b0e5886680cb9', 'dpl', 'Y'),
+(43, 567, '567', '99c5e07b4d5de9d18c350cdf64c5aa3d', 'mahasiswa', 'Y'),
+(44, 39, '9000', 'd5ab8dc7ef67ca92e41d730982c5c602', 'mahasiswa', 'Y'),
+(45, 40, '2110', 'c3535febaff29fcb7c0d20cbe94391c7', 'mahasiswa', 'Y');
 
 -- --------------------------------------------------------
 
@@ -7401,9 +7407,8 @@ CREATE TABLE `lokasi_kkn` (
 --
 
 INSERT INTO `lokasi_kkn` (`id_lokasi`, `provinsi_id`, `kabupaten_id`, `kecamatan_id`, `desa_id`, `kuota_kkn`, `sisa_kuota`, `id_dpl`) VALUES
-(1, '14', '1403', '1403090', '1403090002', 20, 0, 14),
-(7, '14', '1403', '1403011', '1403011006', 2, 0, 14),
-(8, '12', '1202', '1202020', '1202020028', 12, 0, 14);
+(1, '14', '1403', '1403090', '1403090002', 20, 1, 14),
+(7, '14', '1403', '1403011', '1403011006', 2, 2, 14);
 
 -- --------------------------------------------------------
 
@@ -7450,15 +7455,19 @@ CREATE TABLE `mahasiswa` (
   `foto_profil` varchar(255) DEFAULT NULL,
   `no_hp` varchar(20) DEFAULT NULL,
   `asal_daerah` varchar(255) DEFAULT NULL,
-  `agama` varchar(50) DEFAULT NULL
+  `agama` varchar(50) DEFAULT NULL,
+  `jk` enum('pria','wanita') NOT NULL DEFAULT 'pria'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `mahasiswa`
 --
 
-INSERT INTO `mahasiswa` (`id_mhs`, `nama_mhs`, `nim`, `email`, `tempat_lahir`, `tanggal_lahir`, `alamat`, `fakultas_id`, `jurusan_id`, `foto_profil`, `no_hp`, `asal_daerah`, `agama`) VALUES
-(26, 'ridho darmawan, S.T, M.Kom, Phd', '111', 'ridho.rd849@gmail.com', 'tembilahan kota', '1996-10-21', 'Tembilahan Hilir', 1, 5, NULL, '085364623827', 'tembilahan', 'islam');
+INSERT INTO `mahasiswa` (`id_mhs`, `nama_mhs`, `nim`, `email`, `tempat_lahir`, `tanggal_lahir`, `alamat`, `fakultas_id`, `jurusan_id`, `foto_profil`, `no_hp`, `asal_daerah`, `agama`, `jk`) VALUES
+(26, 'ridho darmawan, S.T, M.Kom, Phd', '111', 'ridho.rd849@gmail.com', 'tembilahan kota', '1996-10-21', 'Tembilahan Hilir', 1, 5, NULL, '085364623827', 'tembilahan', 'islam', 'wanita'),
+(38, 'Doni Salmanan', '567', 'doni@gmail.com', 'Tembilahan', '2000-10-10', 'riau', 2, 4, 'foto_profil-567-593.jpg', '6565656', 'riau', 'islam', 'pria'),
+(39, 'mnm', '9000', 'r@gmail.com', 'askh', '2000-10-10', 'jkj', 1, 5, NULL, '9090', 'jk', 'islam', 'pria'),
+(40, 'Robot, S.Kom', '2110', 'robot@gmail.com', 'bojonegoro', '2000-12-12', 'bojonegoro street', 2, 4, NULL, '089898987656', 'jawa timur', 'islam', 'pria');
 
 -- --------------------------------------------------------
 
@@ -8098,7 +8107,7 @@ CREATE TABLE `setting_kkn` (
 --
 
 INSERT INTO `setting_kkn` (`id_set`, `tgl_mulai_kkn`, `tgl_akhir_kkn`, `tgl_mulai_laporan`, `tgl_akhir_laporan`, `ketua`, `nip_ketua`, `gelombang`, `tahun`, `ttd_ketua`, `koordinator_kkn`, `nip_koordinator`, `ttd_koordinator`) VALUES
-(1, '2022-03-30', '2022-04-11', '2022-03-31', '2022-04-11', 'ridho darmawan, ST', '1996070820081001', '1', '2022', 'ttd-463.png', 'Rahmad sahroni. S.Kom', '1998090920091001', 'ttd-302.png');
+(1, '2022-03-30', '2022-04-28', '2022-03-31', '2022-04-11', 'ridho darmawan, ST', '1996070820081001', '1', '2022', 'ttd-463.png', 'Rahmad sahroni. S.Kom', '1998090920091001', 'ttd-302.png');
 
 -- --------------------------------------------------------
 
@@ -83275,7 +83284,7 @@ ALTER TABLE `villages`
 -- AUTO_INCREMENT for table `dpl`
 --
 ALTER TABLE `dpl`
-  MODIFY `id_dpl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_dpl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `fakultas`
@@ -83293,13 +83302,13 @@ ALTER TABLE `jurusan`
 -- AUTO_INCREMENT for table `kkn`
 --
 ALTER TABLE `kkn`
-  MODIFY `id_kkn` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_kkn` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `login_user`
 --
 ALTER TABLE `login_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `lokasi_kkn`
@@ -83317,7 +83326,7 @@ ALTER TABLE `lokasi_kkn_mahasiswa`
 -- AUTO_INCREMENT for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  MODIFY `id_mhs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_mhs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `nilai_kkn`
